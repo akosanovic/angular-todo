@@ -6,13 +6,17 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { MainCardComponent } from './main-card/main-card.component';
+import { TodoCardComponent } from './todo-card/todo-card.component';
+import { TodoTaskComponent } from './todo-task/todo-task.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainCardComponent
+    MainCardComponent,
+    TodoCardComponent,
+    TodoTaskComponent
   ],
   imports: [
     BrowserModule,
