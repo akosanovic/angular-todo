@@ -62,7 +62,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 * {
-	@include box-sizing(border-box);
+    box-sizing:border-box;
 
 
 	ul {
@@ -104,7 +104,6 @@ body {
 // STANDARD TRANSITION USED
 
 // @include transition( all 0.5s linear );
-
 
 
 // HELPER CLASSES
