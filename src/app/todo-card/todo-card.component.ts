@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoCardComponent implements OnInit {
 
+  cardTitle = "Edit Category Name"
   constructor() { }
 
   ngOnInit() {

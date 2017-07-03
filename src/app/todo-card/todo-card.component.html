@@ -1,77 +1,79 @@
 <div class="col-sm-1 col-ms-1 col-lg-4 col-md-6" draggable="true">
-  <div class="todoCardContainer todo--card--contianer" data-card-id = ''>
-    <div class="todoCardContent">
+    <div class="todoCardContainer todo--card--contianer" data-card-id = ''>
+        <div class="todoCardContent">
 
-      <!-- Todo Card Header :: BEGIN -->
-      <div class="todoCardHeader ${ this.cardHeaderColor } todo--card--header">
+            <!-- Todo Card Header :: BEGIN -->
+            <div class="todoCardHeader yellowCardHeader todo--card--header" 
+            data='${ this.cardHeaderColor }'>
 
-        <!-- #1 -->
-        <div class="inputGroup">
-          <div class="absolutePositionedPrefix">
-            <div class="iconContainer">
-              <i class="fa fa-file-text-o" aria-hidden="true"></i>
-            </div>
-          </div>											
-          <input type="text" class="inputGroupDescription todo--card--title--input"  readonly="readonly"
-            name="todo card description" value="${this.cardTitle}">
-        </div>
-
-
-        <!-- #2 -->
-        <!-- On Click display Drop Down Menu :: BEGIN  -->
-        <a href="#" class="cardMenuButton todo--card--menu--button">
-          <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-        </a>
-        <div class="todoCardDropDownMenu todo--card--dropdown--menu">
-          <div class="dropDownMenuContainer">
-            <ul class="dropdownMenuList">
-              <li class="dropdownMenuItem">
-                <a href="#" class="dropdownMenuLink card--menu--edit--button">
-                  Edit Card
-                </a>
-              </li>
-              <li class="dropdownMenuItem">
-                <a href="#" class="dropdownMenuLink card--menu--delete--button">
-                  Delete Card
-                </a>
-              </li>
-            </ul>
-          </div>											
-        </div><!-- On Click display Drop Down Menu :: END  -->
-      
-
-      </div><!-- Todo Card Header :: END -->
-
-
-      <!-- Todo Card Body :: BEGIN -->
-      <div class="todoCardBody show--card--body">
-
-        <!-- #3 -->
-        <div class="todoCardAddNewTaskButtonSmall todo--card--add--new--task--button" >
-          <a href="#" class="todoCardAddNewTaskButton">
-            <img class="addNewButtonImageSmall" src="../../assets/images/add-button-small.svg">
-          </a>
-        </div>
-        <!-- #4 Todo Card Task List:: BEGIN -->
-        
-        <ul class = 'newTaskInputContainer remove  new--task--input--container'>
-          <li class="todoTaskItem taskItemContainer todo--task--empty--frame">
+            <!-- #1 -->
             <div class="inputGroup">
-                                  
-              <input type="text" class="inputGroupDescription new--todo--task--description" 
-              name="todo card description" value="" >
+                <div class="absolutePositionedPrefix">
+                    <div class="iconContainer">
+                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    </div>
+                </div>											
+                <input type="text" class="inputGroupDescription todo--card--title--input"  
+                readonly="readonly" name="todo card description" value="{{cardTitle}}">
             </div>
-          </li>
+
+
+            <!-- #2 -->
+            <!-- On Click display Drop Down Menu :: BEGIN  -->
+            <a href="#" class="cardMenuButton todo--card--menu--button">
+                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </a>
+            <div class="todoCardDropDownMenu todo--card--dropdown--menu">
+                <div class="dropDownMenuContainer">
+                <ul class="dropdownMenuList">
+                    <li class="dropdownMenuItem">
+                    <a href="#" class="dropdownMenuLink card--menu--edit--button">
+                        Edit Card
+                    </a>
+                    </li>
+                    <li class="dropdownMenuItem">
+                    <a href="#" class="dropdownMenuLink card--menu--delete--button">
+                        Delete Card
+                    </a>
+                    </li>
+                </ul>
+                </div>	
+
+            </div><!-- On Click display Drop Down Menu :: END  -->
+        </div><!-- Todo Card Header :: END -->
+
+
+        <!-- Todo Card Body :: BEGIN -->
+        <div class="todoCardBody show--card--body">
+
+        <!-- #3 Add Task Button-->
+        <div class="todoCardAddNewTaskButtonSmall todo--card--add--new--task--button" >
+            <a href="#" class="todoCardAddNewTaskButton">
+            <img class="addNewButtonImageSmall" 
+                src="../../assets/images/add-button-small.svg">
+            </a>
+        </div>
+        
+        <!-- #4 Todo Card Task List:: BEGIN -->        
+        <ul class = 'newTaskInputContainer remove  new--task--input--container'>
+            <li class="todoTaskItem taskItemContainer todo--task--empty--frame">
+            <div class="inputGroup">
+                                    
+                <input type="text" class="inputGroupDescription new--todo--task--description" 
+                name="todo card description" value="" >
+            </div>
+            </li>
         </ul>
 
-      
-
+        
+        <!-- #5  -->
         <ul class="todoCardTaskList todo--task--list--container">
+            <!-- Dynamicaly filled content -->
             <app-todo-task></app-todo-task>
-          <!-- Dynamicaly filled content -->
-
         </ul><!-- Todo Card Task List:: END -->
-      </div><!-- Todo Card Body :: END -->
+
+
+        </div><!-- Todo Card Body :: END -->
     </div>
-  </div>
+    </div>
 </div><!-- Card Container :: END -->
