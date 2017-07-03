@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./todo-task.component.scss']
 })
 export class TodoTaskComponent implements OnInit {
-
+  cardsArray = []
   constructor() { }
 
   ngOnInit() {

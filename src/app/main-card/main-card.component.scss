@@ -43,7 +43,6 @@
 			}
 
 			.addNewButtonContainer {
-				
 
 				position: relative;
 				display: inline-block;
@@ -71,16 +70,14 @@
 					right   : -($lh*3.5);
 					color   : $pink;
 					z-index : 10;
-
 				}
+
 				.addTaskFloatingButton {					
 					position: absolute;
-					right  : -($lh*3.5);
+					right   : -($lh*3.5);
 					bottom  : -($lh/2) !important;
 					color   : $pink;
-					z-index: 10;
-					
-
+					z-index : 10;
 				}
 				
 				&.hideFloatingButtons {
@@ -111,6 +108,9 @@
 				}// FLOATING BUTTONS ANIMATION :: END
 			}
 		} // Main Todo Card Header :: END
+
+
+
 
 	//Visible on click on add New Button
 	.floatingButtons {

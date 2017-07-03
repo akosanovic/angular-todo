@@ -13,16 +13,20 @@
 
 
             <!-- Main Card Add New Button --><!-- On click: show floating buttons -->
-            <div  class=" addNewButtonContainer hideFloatingButtons 
-                        main--content--add--new--button--container">
+            <div  class="addNewButtonContainer 
+                         main--content--add--new--button--container"
+                         [ngClass]="{'hideFloatingButtons': hideFloatingButtons}"
+                         (click)='toggleFloatingButtons($event)'>
                 
                 <div class="addNewTaskButton main--content--add--new--button">
                     <img src="../../assets/images/add-button.svg">
                 </div>
 
+
                 <!-- Floating Buttons position depends on position of New Task Button -->
                 <div class="floatingButtons addCardFloatingButton 
-                            floating--button floating--button--add--card">
+                            floating--button"
+                            (click)='createNewCard($event)'>
                     <div class="floatingButtonContent">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
                     </div>
@@ -30,7 +34,11 @@
                         Card
                     </span>
                 </div>
-                <div class="floatingButtons  addTaskFloatingButton floating--button floating--button--add--task">
+
+
+                <div class="floatingButtons addTaskFloatingButton
+                            floating--button"
+                            (click)="createNewTask($event)">
                     <div class="floatingButtonContent">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </div>
@@ -40,14 +48,16 @@
                 </div>
             </div>
         </div><!--CardHeader:: END-->
+
+
         <!-- Card Body :: BEGIN -->
-        <div class="cardBodyContainer main--card--body--container">
-            <div class="cardBodyContent main--card--body--content">
+        <div class="cardBodyContainer">
+            <div class="cardBodyContent">
                 <h2 class="mainTodoCardTitle">
                     Oldest Tasks
                 </h2>
 
-                <ul class="oldestTaskListContainer tasks--list--container oldest--task--container">	
+                <ul class="oldestTaskListContainer">	
                     <!-- Dynamically filled content -->
                     <app-todo-task></app-todo-task>
                 </ul>

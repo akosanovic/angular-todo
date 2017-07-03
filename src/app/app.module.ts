@@ -9,6 +9,8 @@ import { MainCardComponent } from './main-card/main-card.component';
 import { TodoCardComponent } from './todo-card/todo-card.component';
 import { TodoTaskComponent } from './todo-task/todo-task.component';
 
+// Animation
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { TodoTaskComponent } from './todo-task/todo-task.component';
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
