@@ -2,9 +2,12 @@
 export class TodoTask {
     public id         : number;
     public description: string;
+    public checked    : boolean;
 
-    constructor (id: number, description: string){
+
+    constructor (id: number, description: string, checked: boolean){
         this.id          = id;
         this.description = description;
+        this.checked     = checked;
     }
 }

@@ -4,18 +4,25 @@
         <div class="row">
 
             <!--Main Card Column-->
-            <div class="col-sm-1 col-ms-6 col-md-4 col-lg-3 mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnLeft">
-                <app-main-card></app-main-card>
+            <div class="col-sm-1 col-ms-6 col-md-4 col-lg-3 mediumWidthAbsoluteColumn
+                mediumWidthAbsoluteColumnLeft">
+                <app-main-card 
+                    (newCardCreated)="onTodoCardCreated($event)">
+                </app-main-card>
             </div>
 
             <!--Todo Cards Group-->        
-            <div class="mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnRigth col-sm-1 col-ms-6 col-md-8 col-lg-9 ">
+            <div class=" col-sm-1 col-ms-6 col-md-8 col-lg-9 
+                    mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnRigth">
                 <div class="row absolutePositionOverflowContent todo--cards--row">
-                    <app-todo-card></app-todo-card>
-                    <app-todo-card></app-todo-card>
-                    <app-todo-card></app-todo-card>
+                    
+                    <app-todo-card 
+                        *ngFor='let card of todoCardArray'
+                        [todoCard] = 'card'>
+                    </app-todo-card>
+
                 </div>						
-            </div>
+            </div>  
 
         </div>
     </div>

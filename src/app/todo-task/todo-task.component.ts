@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { TodoTask } from './../shared/todo-task.module';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-todo-task',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./todo-task.component.scss']
 })
 export class TodoTaskComponent implements OnInit {
-  cardsArray = []
-  constructor() { }
+  
+    @Input('todoTask') task: TodoTask;
+  
+    constructor() { }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+    }
 
 }

@@ -1,10 +1,13 @@
+
+
 <div class="col-sm-1 col-ms-1 col-lg-4 col-md-6" draggable="true">
-    <div class="todoCardContainer todo--card--contianer" data-card-id = ''>
-        <div class="todoCardContent">
+    <div 
+        class="todoCardContainer">
+
+        <div class = "todoCardContent">
 
             <!-- Todo Card Header :: BEGIN -->
-            <div class="todoCardHeader yellowCardHeader todo--card--header" 
-            data='${ this.cardHeaderColor }'>
+            <div class="todoCardHeader {{card.headerColor}}"  >
 
             <!-- #1 -->
             <div class="inputGroup">
@@ -13,30 +16,36 @@
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
                     </div>
                 </div>											
-                <input type="text" class="inputGroupDescription todo--card--title--input"  
-                readonly="readonly" name="todo card description" value="{{cardTitle}}">
+                <input type     = "text"
+                       class    = "inputGroupDescription"
+                       readonly = "readonly"
+                       name     = "todo card description"
+                       value    = "{{card.title}}">
             </div>
 
 
             <!-- #2 -->
             <!-- On Click display Drop Down Menu :: BEGIN  -->
-            <a href="#" class="cardMenuButton todo--card--menu--button">
+            <a href="#" 
+               class="cardMenuButton"
+               (click)='showCardMenu()'>
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>
-            <div class="todoCardDropDownMenu todo--card--dropdown--menu">
+            <div class="todoCardDropDownMenu"
+                 [ngClass] = "{'showTodoCardDropDownMenu': showCardDrpodownMenu}">
                 <div class="dropDownMenuContainer">
-                <ul class="dropdownMenuList">
-                    <li class="dropdownMenuItem">
-                    <a href="#" class="dropdownMenuLink card--menu--edit--button">
-                        Edit Card
-                    </a>
-                    </li>
-                    <li class="dropdownMenuItem">
-                    <a href="#" class="dropdownMenuLink card--menu--delete--button">
-                        Delete Card
-                    </a>
-                    </li>
-                </ul>
+                    <ul class="dropdownMenuList">
+                        <li class="dropdownMenuItem">
+                            <a href="#" class="dropdownMenuLink card--menu--edit--button">
+                                Edit Card
+                            </a>
+                        </li>
+                        <li class="dropdownMenuItem">
+                            <a href="#" class="dropdownMenuLink card--menu--delete--button">
+                                Delete Card
+                            </a>
+                        </li>
+                    </ul>
                 </div>	
 
             </div><!-- On Click display Drop Down Menu :: END  -->
@@ -44,33 +53,46 @@
 
 
         <!-- Todo Card Body :: BEGIN -->
-        <div class="todoCardBody show--card--body">
+        <div class="todoCardBody">
 
-        <!-- #3 Add Task Button-->
-        <div class="todoCardAddNewTaskButtonSmall todo--card--add--new--task--button" >
-            <a href="#" class="todoCardAddNewTaskButton">
-            <img class="addNewButtonImageSmall" 
-                src="../../assets/images/add-button-small.svg">
-            </a>
-        </div>
-        
-        <!-- #4 Todo Card Task List:: BEGIN -->        
-        <ul class = 'newTaskInputContainer remove  new--task--input--container'>
-            <li class="todoTaskItem taskItemContainer todo--task--empty--frame">
-            <div class="inputGroup">
-                                    
-                <input type="text" class="inputGroupDescription new--todo--task--description" 
-                name="todo card description" value="" >
+            <!-- #3 Add Task Button-->
+            <div class="todoCardAddNewTaskButtonSmall">
+               
+                <a href    = "#"
+                   class   = "todoCardAddNewTaskButton"
+                   (click) = 'showNewTaskInput()'>
+                    
+                    <img class="addNewButtonImageSmall" 
+                        src="../../assets/images/add-button-small.svg">
+                </a>
+
             </div>
-            </li>
-        </ul>
-
         
-        <!-- #5  -->
-        <ul class="todoCardTaskList todo--task--list--container">
-            <!-- Dynamicaly filled content -->
-            <app-todo-task></app-todo-task>
-        </ul><!-- Todo Card Task List:: END -->
+            <!-- #4 Todo Card Task List:: BEGIN -->        
+            <ul class = 'newTaskInputContainer'  
+                [ngClass]="{'remove': !showTaskInput}">
+                <li class="todoTaskItem taskItemContainer">
+                    <div class="inputGroup">
+                                            
+                        <input 
+                            type="text" 
+                            class="inputGroupDescription " 
+                            name="todo card description"
+                            value=""
+                            (keypress) = 'newTaskAdded($event)'>
+                    </div>
+                </li>
+            </ul>
+
+            
+            <!-- #5  -->
+            <ul class="todoCardTaskList" [ngClass]="{'newTaskInputOpened' : showTaskInput}" >
+                <!-- Dynamicaly filled content -->
+                <app-todo-task 
+                    *ngFor = 'let task of taskArray'
+                    [todoTask] = 'task'>
+                </app-todo-task>
+            </ul><!-- Todo Card Task List:: END -->
 
 
         </div><!-- Todo Card Body :: END -->

@@ -1,14 +1,22 @@
 
-<li class="todoTaskItem taskItemContainer todo--task--item" data-task-id="${this.todoTaskID}">
-  <div class="inputGroup">
-      <div class="absolutePositionedPrefix">
-          <div class="customCheckbox">
-              <input type="checkbox" name="task status" 
-              class="task--done--status" id="todo--card--task--status${randomCheckboxID}">
-              <label for="todo--card--task--status${randomCheckboxID}"></label>
-          </div>
-      </div>											
-      <input type="text" class="inputGroupDescription" name="todo card description" 
-      readonly="readonly" value="Task description for now">
-  </div>
+<li class="todoTaskItem taskItemContainer" [attr.data-task-id]="task.id"> 
+    <div class="inputGroup">
+        <!--Custom Checkbox Group :: BEGIN-->
+        <div class="absolutePositionedPrefix">
+            <div class="customCheckbox">
+                <input type  = "checkbox"
+                        name  = "task status"
+                        class = "task--done--status"
+                        id    = "todo--card--task--status${randomCheckboxID}"
+                        [checked] = "task.checked">
+                <label for="todo--card--task--status${randomCheckboxID}"></label>
+            </div>          
+        </div>	
+        <!--Custom Checkbox Group :: BEGIN-->										
+        <input type     = "text"
+                class    = "inputGroupDescription"
+                name     = "todo card description"
+                readonly = "readonly"
+                value    = "{{task.description}}">
+    </div>
   </li>

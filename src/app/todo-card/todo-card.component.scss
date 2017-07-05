@@ -69,7 +69,7 @@
 		}
 	}
 	.todoCardDropDownMenu {
-		@include transition(all 0.5s ease-in-out);
+		@include transition(height 0.5s ease, overflow 0.7s ease-in-out );		
 		position: absolute;
 		top  : $lh*2.5;
 		right: $lh;
@@ -78,8 +78,9 @@
 		height: 0;
 		z-index: 20;
 		overflow: hidden;
+
 		&.showTodoCardDropDownMenu {
-			@include transition(all 0.5s ease-in-out);
+			@include transition(height 0.5s ease-in-out, overflow 0.7s ease-in-out );
 			overflow: visible;
 			height: 100%;
 		}
@@ -153,6 +154,7 @@
 	}
 
 	.todoCardTaskList {
+		@include transition(all 0.357s ease-out);
 		position: absolute;
 		top   : 0;
 		left  : 0;
@@ -160,7 +162,8 @@
 		bottom: 0;
 		overflow: auto;
 		&.newTaskInputOpened {
-			top: 74px;
+			@include transition(all 0.357s ease-out);		
+			top: 75px;
 		}
 		.todoTaskItem {
 			color: $blue-dark;

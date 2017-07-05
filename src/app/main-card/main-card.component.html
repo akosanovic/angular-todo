@@ -59,7 +59,9 @@
 
                 <ul class="oldestTaskListContainer">	
                     <!-- Dynamically filled content -->
-                    <app-todo-task></app-todo-task>
+                    <app-todo-task
+                        *ngFor = 'let task of oldestTaskArray'
+                        [todoTask] = 'task'></app-todo-task>
                 </ul>
             </div>
         </div><!-- Card Body :: END -->
