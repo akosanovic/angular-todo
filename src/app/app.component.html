@@ -15,11 +15,19 @@
             <div class=" col-sm-1 col-ms-6 col-md-8 col-lg-9 
                     mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnRigth">
                 <div class="row absolutePositionOverflowContent todo--cards--row">
-                    
-                    <app-todo-card 
-                        *ngFor='let card of todoCardArray'
-                        [todoCard] = 'card'>
-                    </app-todo-card>
+                   
+                    <div *ngFor = 'let card of todoCardArray'>
+                        
+                        <app-todo-card 
+                            *ngIf = "card"
+                            [todoCard] = 'card'>
+                        </app-todo-card>
+                        
+                        <!--ng-template is element that isn't rendered by default-->
+                        <ng-template [ngIf] = '!card'>
+                            No card to display
+                        </ng-template>
+                    </div>
 
                 </div>						
             </div>  

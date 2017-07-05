@@ -1,6 +1,5 @@
 
 import { Component, NgModule, OnInit, Output, EventEmitter } from '@angular/core';
-
 import { TodoTask } from '../shared/todo-task.module';
 import { TodoCard } from '../todo-card/todo-card.model';
 
@@ -16,12 +15,13 @@ export class MainCardComponent implements OnInit {
     todoCardCounter: number = 0;
     hideFloatingButtons = true;
     
-    
+    @Output() newCardCreated = new EventEmitter<any>();
     oldestTaskArray: [TodoTask] = [
         new TodoTask(1, "lorem ipsum", false)
     ]
-
-    @Output() newCardCreated = new EventEmitter<any>();
+    // ngClass - binding property
+    noOldTasks = this.oldestTaskArray.length <= 0 ? true : false;
+    
 
     constructor() { }
     ngOnInit() {
@@ -30,12 +30,15 @@ export class MainCardComponent implements OnInit {
 
     toggleFloatingButtons(e) {
         console.log('Show floating buttons - button clicked')
-        this.hideFloatingButtons = !this.hideFloatingButtons;
+        this.hideFloatingButtons =! this.hideFloatingButtons;
     }
-    
+
+
     createNewCard(e){
         e.stopPropagation();
-        
+        let newCard: TodoCard;
+
+
         let id          = this.todoCardCounter;
         let title       = undefined;
         let headerColor = this.setCardHeaderColor();
@@ -43,14 +46,17 @@ export class MainCardComponent implements OnInit {
 
         // let todoCard = new TodoCard(id, headerColor, title, taskArray )
         // console.log( 'CARD', todoCard )
-
+        newCard = new TodoCard( id, headerColor, title, taskArray )
         console.log('EMIT', {id: id, headerColor: headerColor, title: title, taskArray: taskArray} )
-        this.newCardCreated.emit( {id: id, headerColor: headerColor, title: title, taskArray: taskArray}  )
+        
+        this.newCardCreated.emit( newCard )
         this.todoCardCounter ++;
 
         console.log('create new card, card num', this.todoCardCounter);
         this.hideFloatingButtons = true;
     }
+
+
 
     createNewTask(e){
         e.stopPropagation();
@@ -76,7 +82,6 @@ export class MainCardComponent implements OnInit {
         while ( colorIndex > colorArryLength ){
             colorIndex = colorIndex % colorArryLength;
         }
-
         headerColorClass = `${cardHeaderColorArray[colorIndex]}CardHeader`;
         return headerColorClass;
     }

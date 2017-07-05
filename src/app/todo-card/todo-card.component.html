@@ -13,7 +13,7 @@
             <div class="inputGroup">
                 <div class="absolutePositionedPrefix">
                     <div class="iconContainer">
-                        <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                        <i class = "fa fa-file-text-o" aria-hidden="true"></i>
                     </div>
                 </div>											
                 <input type     = "text"
@@ -76,17 +76,22 @@
                                             
                         <input 
                             type="text" 
-                            class="inputGroupDescription " 
-                            name="todo card description"
+                            class="inputGroupDescription" 
+                            title="New Todo Description"
                             value=""
-                            (keypress) = 'newTaskAdded($event)'>
+                            placeholder="New Todo Description"
+                            
+                            #inputTaskDetails
+                            (keypress) = 'newTaskAdded($event)'
+                            (blur) = "showTaskInput = false"> 
                     </div>
                 </li>
             </ul>
 
             
             <!-- #5  -->
-            <ul class="todoCardTaskList" [ngClass]="{'newTaskInputOpened' : showTaskInput}" >
+            <ul class="todoCardTaskList"
+                [ngClass]="{'newTaskInputOpened' : showTaskInput}" >
                 <!-- Dynamicaly filled content -->
                 <app-todo-task 
                     *ngFor = 'let task of taskArray'

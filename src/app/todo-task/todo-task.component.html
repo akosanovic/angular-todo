@@ -1,22 +1,25 @@
 
-<li class="todoTaskItem taskItemContainer" [attr.data-task-id]="task.id"> 
+<li class="todoTaskItem taskItemContainer" 
+    [attr.data-task-id] = "task.id"
+    [ngClass] = "{'taskChecked':  task.checked}" >
+    
     <div class="inputGroup">
         <!--Custom Checkbox Group :: BEGIN-->
         <div class="absolutePositionedPrefix">
             <div class="customCheckbox">
-                <input type  = "checkbox"
-                        name  = "task status"
-                        class = "task--done--status"
-                        id    = "todo--card--task--status${randomCheckboxID}"
-                        [checked] = "task.checked">
+                <input type      = "checkbox"
+                       name      = "task status"
+                       class     = "task--done--status"
+                       id        = "todo--card--task--status${randomCheckboxID}"
+                       [checked] = "task.checked">
                 <label for="todo--card--task--status${randomCheckboxID}"></label>
             </div>          
         </div>	
         <!--Custom Checkbox Group :: BEGIN-->										
         <input type     = "text"
-                class    = "inputGroupDescription"
-                name     = "todo card description"
-                readonly = "readonly"
-                value    = "{{task.description}}">
+               class    = "inputGroupDescription"
+               name     = "todo card description"
+               readonly = "readonly"
+               value    = "{{task.description}}">
     </div>
   </li>

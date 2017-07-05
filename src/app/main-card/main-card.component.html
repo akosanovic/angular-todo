@@ -51,7 +51,9 @@
 
 
         <!-- Card Body :: BEGIN -->
-        <div class="cardBodyContainer">
+        <div class="cardBodyContainer"
+            [ngClass] = " {'emptyMainTodoCardTaskList': noOldTasks }">
+            <!--this should be handled with <ng-template> -->
             <div class="cardBodyContent">
                 <h2 class="mainTodoCardTitle">
                     Oldest Tasks

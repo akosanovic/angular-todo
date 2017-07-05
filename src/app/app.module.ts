@@ -11,6 +11,8 @@ import { TodoTaskComponent } from './todo-task/todo-task.component';
 
 // Animation
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FocusDirective } from './shared/directives/focus-input/focus.directive';
+
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     MainCardComponent,
     TodoCardComponent,
-    TodoTaskComponent
+    TodoTaskComponent,
+    FocusDirective
   ],
   imports: [
     BrowserModule,
