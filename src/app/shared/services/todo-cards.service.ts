@@ -6,22 +6,22 @@ import { Title } from '@angular/platform-browser';
 @Injectable()
 export class TodoCardsService {
 
-    constructor( private cardTitle?, private taskArray? ) { }
+    constructor() { }
 
 
     todoCards: [TodoCard] = [
-        new TodoCard(0, 'yellowCardHeader', 'Every Day', undefined),
-        new TodoCard(1, 'turquoiseCardHeader',   'Monthly', undefined)
+        new TodoCard(0, 'yellowCardHeader',    'Every Day', undefined),
+        new TodoCard(1, 'turquoiseCardHeader', 'Monthly',   undefined)
     ]
 
-    addTodoCard():void{
-        let id: number            = this.getCardID();
-        let headerColor: string   = this.getCardHeaderColor();
-        let title: string         = this.getCardTitle();
-        let taskArray: [TodoTask] = this.getTasks()
+    addTodoCard( cardTitle?:string, taskArray?:[TodoTask] ):void{
+        let id: number          = this.getCardID();
+        let headerColor: string = this.getCardHeaderColor();
+        let title: string       = this.getCardTitle( cardTitle );
+        let tasks: [TodoTask]   = this.getTasks(taskArray)
 
 
-        const newCard = {id, headerColor, title, taskArray}
+        const newCard = new TodoCard(id, headerColor, title, tasks)
         this.todoCards.push( newCard );
         console.log("Todo Card created", newCard)
     }
@@ -44,14 +44,14 @@ export class TodoCardsService {
     }
 
 
-    getCardTitle(): string{
-        let title: string = this.cardTitle ? this.cardTitle : 'Edit Card Title';
+    getCardTitle( cardTitle?:string ): string{
+        let title: string = cardTitle ? cardTitle : 'Edit Card Title';
         return title;
     }
 
 
-    getTasks(){
-        let tasks = this.taskArray ? this.taskArray : []<[TodoTask]>;
+    getTasks(taskArray){
+        let tasks = taskArray ? taskArray : <[TodoTask]>[];
         return tasks;
     }
 }

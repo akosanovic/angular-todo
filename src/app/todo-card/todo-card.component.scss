@@ -96,6 +96,9 @@
 
 				.dropdownMenuItem {
 					border-bottom: 1px solid $blue-light;
+					&:hover{
+						background-color: #f6f9ff;
+					}
 					&:last-child{
 						border-bottom: 0;
 					}
