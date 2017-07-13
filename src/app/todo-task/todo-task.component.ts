@@ -1,9 +1,11 @@
+import { TodoTaskService } from './../shared/services/todo-task.service';
+import { TodoTask } from './../shared/todo-task.module';
+import { TaskScheduler } from 'protractor/built/taskScheduler';
 import { Component, 
         Input,
         OnInit, 
         ViewEncapsulation } from '@angular/core';
-import { TodoTask } from './../shared/todo-task.module';
-import { TaskScheduler } from 'protractor/built/taskScheduler';
+
 
 @Component({
     selector   : 'app-todo-task',
@@ -19,7 +21,7 @@ export class TodoTaskComponent implements OnInit {
 
     randomTaskNumber: number = this.genarateRandomNumber();
    
-    constructor() {}
+    constructor( private todoTaskService: TodoTaskService) {}
     
 
     ngOnInit() {
@@ -37,5 +39,7 @@ export class TodoTaskComponent implements OnInit {
     todoTaskStatusChanged(){
         console.log('Task Status Changed');
         this.taskChecked = !this.taskChecked;
+
+        this.todoTaskService.onTaskStatusChange( this.task['id'], this.taskChecked );
     }
 }

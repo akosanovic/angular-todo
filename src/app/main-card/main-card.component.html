@@ -13,11 +13,11 @@
 
 
             <!-- Main Card Add New Button --><!-- On click: show floating buttons -->
-            <div  class="addNewButtonContainer"
-                         [ngClass]="{'hideFloatingButtons': floatingButtonsHidden}"
-                         (click)='toggleFloatingButtons($event)'
-                         #floatingButtonsContainer
-                         (clickOutside)='hideFloatingButtons()'>
+            <div class          = "addNewButtonContainer"
+                 [ngClass]      = "{'hideFloatingButtons': floatingButtonsHidden}"
+                 (click)        = 'toggleFloatingButtons($event)'
+                 (clickOutside) = 'hideFloatingButtons()'
+                #floatingButtonsContainer>
                 
                 <div class="addNewTaskButton main--content--add--new--button">
                     <img src="/assets/images/add-button.svg">
@@ -25,9 +25,8 @@
 
 
                 <!-- Floating Buttons position depends on position of New Task Button -->
-                <div class="floatingButtons addCardFloatingButton 
-                            floating--button"
-                            (click)='createNewCard($event)'>
+                <div class   = "floatingButtons addCardFloatingButton"
+                     (click) = 'createNewCard($event)'>
                     <div class="floatingButtonContent">
                         <i class="fa fa-file-text-o" aria-hidden="true"></i>
                     </div>
@@ -37,9 +36,8 @@
                 </div>
 
 
-                <div class="floatingButtons addTaskFloatingButton
-                            floating--button"
-                            (click)="createNewTask($event)">
+                <div class   = "floatingButtons addTaskFloatingButton"
+                     (click) = "createNewTask($event)">
                     <div class="floatingButtonContent">
                         <i class="fa fa-pencil" aria-hidden="true"></i>
                     </div>

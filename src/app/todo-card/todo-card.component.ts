@@ -1,4 +1,5 @@
-import { TodoTaskService } from '../shared/services/todo-task.service';
+import { TodoCardsService } from './../shared/services/todo-cards.service';
+
 import { TodoTask } from './../shared/todo-task.module';
 import { TodoCard } from './todo-card.model';
 import { Component,
@@ -13,8 +14,7 @@ import { Component,
     templateUrl: './todo-card.component.html',
     styleUrls  : ['./todo-card.component.scss'],
     // styles from todoTask can be applied 
-    encapsulation: ViewEncapsulation.None,
-    providers    : [TodoTaskService]
+    encapsulation: ViewEncapsulation.None
 })
 
 
@@ -32,21 +32,23 @@ export class TodoCardComponent implements OnInit {
     // Input Field for the new task
     @ViewChild('inputTaskDetails') inputTaskDetails: ElementRef;
     @ViewChild('cardTitle') cardTitleRef: ElementRef;
+    
+    // IMPORTANT
+    // creating new instance of the todo card, listen for event when card is created
     @Input('todoCard') newCard: TodoCard;
 
-    taskArray: [TodoTask];
-
-
+    
 
 
     // LIFE HOOKS
     constructor( private newTaskInput:ElementRef,
-                 private todoTaskService: TodoTaskService ) { }
+                 private todoCardsService: TodoCardsService) { }
    
+
     ngOnInit() {
-        console.log(" Card title ", this.card);
-        this.card      = this.newCard;
-        this.taskArray = this.todoTaskService.taskArray;
+        this.card           = this.newCard;
+        this.card.taskArray = this.todoCardsService.getTasks();
+        // this.taskArray = this.todoTaskService.taskArray;
     }
 
 
@@ -69,8 +71,9 @@ export class TodoCardComponent implements OnInit {
     }
     changeCardTitle(){
         let inputTitle:string = this.cardTitleRef.nativeElement.value
+        let id: number = this.card.id;
        if (inputTitle){
-            this.card.title = inputTitle;
+            this.todoCardsService.onTitleChange( id, inputTitle )
        }
        else {
            this.cardTitleRef.nativeElement.value = this.card.title;
@@ -81,6 +84,8 @@ export class TodoCardComponent implements OnInit {
 
     deleteTodoCard(e) {
         e.stopPropagation();
+
+        this.todoCardsService.onCardDelete(this.card.id);
         this.hideCardMenu();
     
     }// Card Menu Options :: END
@@ -103,6 +108,7 @@ export class TodoCardComponent implements OnInit {
         if(e.which === 13 && e.target.value ) {
             // Add new Todo Task Object to the Array
             taskDescription = this.inputTaskDetails.nativeElement.value;
+            this.todoCardsService.addNewTask( taskDescription, false )
             this.todoTaskService.addNewTask( taskDescription, false )
             
             this.hideNewTaskInput(e);

@@ -101,7 +101,7 @@
                 [ngClass]="{'newTaskInputOpened' : showTaskInput}" >
                 <!-- Dynamicaly filled content -->
                 <app-todo-task 
-                    *ngFor = 'let task of taskArray'
+                    *ngFor = "let task of card['taskArray']"
                     [todoTask] = 'task'>
                 </app-todo-task>
             </ul><!-- Todo Card Task List:: END -->

@@ -1,4 +1,4 @@
-import { ClickOutsideCloseDirective } from './shared/directives/click-outside-close/click-outside-close.directive';
+import { DataStorageService } from './shared/services/data-storage/data-storage.service';
 import { CheckedBackgroundDirective } from './shared/directives/checked-background/checked-background.directive';
 import { TodoCardsService } from './shared/services/todo-cards.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,7 +31,6 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
 
     // directives
     CheckedBackgroundDirective,
-    ClickOutsideCloseDirective,
     ClickOutsideDirective
   ],
   imports: [
@@ -41,7 +40,7 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
 
     BrowserAnimationsModule
   ],
-  providers: [TodoCardsService ],
+  providers: [TodoCardsService, DataStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
