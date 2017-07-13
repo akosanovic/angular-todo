@@ -1,10 +1,21 @@
-import { Directive } from '@angular/core';
+import { Directive, ElementRef, HostListener, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[appCheckedBackground]'
+    selector: '[appCheckedBackground]'
 })
-export class CheckedBackgroundDirective {
+export class CheckedBackgroundDirective implements OnInit {
 
-  constructor() { }
+    taskItem: HTMLElement;
+    
+
+    @HostListener('click') checkboxClicked() {
+        this.taskItem.style.backgroundColor = '#f6f9ff';
+    }
+
+    constructor( private inputElement: ElementRef ) { }
+   
+    ngOnInit(){
+        this.taskItem = this.inputElement.nativeElement
+    }
 
 }

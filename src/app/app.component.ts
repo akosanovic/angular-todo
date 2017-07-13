@@ -8,15 +8,14 @@ import { TodoCard } from './todo-card/todo-card.model';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [TodoCardsService]
+  styleUrls: ['./app.component.scss']
 })
 
 export class AppComponent implements OnInit {
     todoCardCounter:number = 0;
 
     @Input() todoCard: TodoCard;
-    todoCardArray: [TodoCard];
+    todoCardArray: TodoCard[] = [];
    
     constructor( private todoCardService: TodoCardsService ){ }
     ngOnInit(){

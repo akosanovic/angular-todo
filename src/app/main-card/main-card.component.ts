@@ -1,20 +1,23 @@
 
-import { Component, NgModule, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, NgModule, OnInit, Output, Renderer2, ViewChild, ElementRef } from '@angular/core';
 import { TodoTask } from '../shared/todo-task.module';
 import { TodoCard } from '../todo-card/todo-card.model';
 
 
 
 @Component({
-  selector: 'app-main-card',
+  selector   : 'app-main-card',
   templateUrl: './main-card.component.html',
-  styleUrls: ['./main-card.component.scss']
+  styleUrls  : ['./main-card.component.scss']
 })
 export class MainCardComponent implements OnInit {
     
-    hideFloatingButtons = true;
+    floatingButtonsHidden = true;
+    @ViewChild("floatingButtonsContainer") floatingButtonsContainer: ElementRef;
     
+    // Outputing events
     @Output() newCardCreated = new EventEmitter<any>();
+   
    
     oldestTaskArray: [TodoTask] = [
         new TodoTask(1, "lorem ipsum", false)
@@ -25,14 +28,18 @@ export class MainCardComponent implements OnInit {
     noOldTasks = this.oldestTaskArray.length <= 0 ? true : false;
     
 
-    constructor() { }
+    constructor( private renderer2: Renderer2 ) { }
     ngOnInit() {
     }
 
 
     toggleFloatingButtons(e) {
+        e.stopPropagation();
         console.log('Show floating buttons - button clicked')
-        this.hideFloatingButtons =! this.hideFloatingButtons;
+        this.floatingButtonsHidden = !this.floatingButtonsHidden;
+    }
+    hideFloatingButtons(){
+        this.floatingButtonsHidden = true;
     }
 
 
@@ -41,8 +48,8 @@ export class MainCardComponent implements OnInit {
         
         this.newCardCreated.emit()
         console.log('create new card, card num');
-        
-        this.hideFloatingButtons = true;
+
+        this.floatingButtonsHidden = true;
     }
 
 
@@ -51,6 +58,15 @@ export class MainCardComponent implements OnInit {
         e.stopPropagation();
         console.log('create new task');
 
-        this.hideFloatingButtons = true;
+        this.floatingButtonsHidden = true;
     }
+
+
+    // onClick() {
+
+    //     console.log("parent click");
+    //     this.renderer2.addClass( this.floatingButtonsContainer.nativeElement, "hideFloatingButtons" );
+
+    //     debugger        
+    // }
 }

@@ -1,7 +1,7 @@
 
 <li class="todoTaskItem taskItemContainer" 
     [attr.data-task-id] = "task.id"
-    [ngClass] = "{'taskChecked':  task.checked}" >
+    [ngClass] = "{'taskChecked': taskChecked }">
     
     <div class="inputGroup">
         <!--Custom Checkbox Group :: BEGIN-->
@@ -10,9 +10,12 @@
                 <input type      = "checkbox"
                        name      = "task status"
                        class     = "task--done--status"
-                       id        = "todo--card--task--status${randomCheckboxID}"
+                       id        = "todo--card--task--status-{{randomTaskNumber}}"
                        [checked] = "task.checked">
-                <label for="todo--card--task--status${randomCheckboxID}"></label>
+                <!--Random Task Number required for the custom checkbox-->
+                <label for="todo--card--task--status-{{randomTaskNumber}}"
+                       (click)='todoTaskStatusChanged()'>
+                </label>
             </div>          
         </div>	
         <!--Custom Checkbox Group :: BEGIN-->										

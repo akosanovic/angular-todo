@@ -7,19 +7,20 @@
         <!--CardHeader:: BEGIN-->
         <div class="cardHeader">
             <div class="todoLogoContainer">
-                <img src="../../assets/images/todo-logo.svg" alt="logo image" 
+                <img src="/assets/images/todo-logo.svg" alt="logo image" 
                      class="todoLogo">
             </div>
 
 
             <!-- Main Card Add New Button --><!-- On click: show floating buttons -->
-            <div  class="addNewButtonContainer 
-                         main--content--add--new--button--container"
-                         [ngClass]="{'hideFloatingButtons': hideFloatingButtons}"
-                         (click)='toggleFloatingButtons($event)'>
+            <div  class="addNewButtonContainer"
+                         [ngClass]="{'hideFloatingButtons': floatingButtonsHidden}"
+                         (click)='toggleFloatingButtons($event)'
+                         #floatingButtonsContainer
+                         (clickOutside)='hideFloatingButtons()'>
                 
                 <div class="addNewTaskButton main--content--add--new--button">
-                    <img src="../../assets/images/add-button.svg">
+                    <img src="/assets/images/add-button.svg">
                 </div>
 
 

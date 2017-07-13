@@ -1,3 +1,6 @@
+import { ClickOutsideCloseDirective } from './shared/directives/click-outside-close/click-outside-close.directive';
+import { CheckedBackgroundDirective } from './shared/directives/checked-background/checked-background.directive';
+import { TodoCardsService } from './shared/services/todo-cards.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,6 +11,9 @@ import { AppComponent } from './app.component';
 import { MainCardComponent } from './main-card/main-card.component';
 import { TodoCardComponent } from './todo-card/todo-card.component';
 import { TodoTaskComponent } from './todo-task/todo-task.component';
+
+// Directives
+import { ClickOutsideDirective } from './../../node_modules/angular2-click-outside/clickOutside.directive';
 
 // Animation
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +27,12 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
     MainCardComponent,
     TodoCardComponent,
     TodoTaskComponent,
-    FocusDirective
+    FocusDirective,
+
+    // directives
+    CheckedBackgroundDirective,
+    ClickOutsideCloseDirective,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,
@@ -30,7 +41,7 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
 
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [TodoCardsService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,10 +1,8 @@
 
 
 <div class="col-sm-1 col-ms-1 col-lg-4 col-md-6" draggable="true">
-    <div 
-        class="todoCardContainer">
-
-        <div class = "todoCardContent">
+    <div class="todoCardContainer">
+        <div class="todoCardContent">
 
             <!-- Todo Card Header :: BEGIN -->
             <div class="todoCardHeader {{card.headerColor}}"  >
@@ -16,11 +14,14 @@
                         <i class = "fa fa-file-text-o" aria-hidden="true"></i>
                     </div>
                 </div>											
-                <input type     = "text"
-                       class    = "inputGroupDescription"
-                       readonly = "readonly"
-                       name     = "todo card description"
-                       value    = "{{card.title}}">
+                <input type       = "text"
+                       class      = "inputGroupDescription"
+                       name       = "todo card description"
+                       [readonly] = "disableCardTitle"
+                       (blur)     = 'changeCardTitle()'
+
+                       value      = "{{card.title}}"
+                       #cardTitle>
             </div>
 
 
@@ -28,20 +29,26 @@
             <!-- On Click display Drop Down Menu :: BEGIN  -->
             <a href="#" 
                class="cardMenuButton"
-               (click)='showCardMenu()'>
+               (click)='toggleCardMenu()'
+               (clickOutside)='hideCardMenu()'>
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>
             <div class="todoCardDropDownMenu"
-                 [ngClass] = "{'showTodoCardDropDownMenu': showCardDrpodownMenu}">
+                 [ngClass] = "{'showTodoCardDropDownMenu': showCardDrpodownMenu}"
+                 >
                 <div class="dropDownMenuContainer">
                     <ul class="dropdownMenuList">
                         <li class="dropdownMenuItem">
-                            <a href="#" class="dropdownMenuLink card--menu--edit--button">
+                            <a href="#" 
+                               class="dropdownMenuLink"
+                               (click)='editCardHeader($event)'>
                                 Edit Card
                             </a>
                         </li>
                         <li class="dropdownMenuItem">
-                            <a href="#" class="dropdownMenuLink card--menu--delete--button">
+                            <a href="#" 
+                               class="dropdownMenuLink"
+                               (click)='deleteTodoCard($event)'>
                                 Delete Card
                             </a>
                         </li>
@@ -83,7 +90,7 @@
                             
                             #inputTaskDetails
                             (keypress) = 'newTaskAdded($event)'
-                            (blur) = "showTaskInput = false"> 
+                            (blur) = "newTaskInputBlured($event)"> 
                     </div>
                 </li>
             </ul>

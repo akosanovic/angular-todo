@@ -1,12 +1,13 @@
 import { TodoTask } from './../todo-task.module';
 import { TodoCard } from './../../todo-card/todo-card.model';
 import { Injectable } from '@angular/core';
+import { Http, Response } from '@angular/http';
 import { Title } from '@angular/platform-browser';
 
 @Injectable()
 export class TodoCardsService {
 
-    constructor() { }
+    constructor( private http: Http ) { }
 
 
     todoCards: [TodoCard] = [
@@ -18,12 +19,26 @@ export class TodoCardsService {
         let id: number          = this.getCardID();
         let headerColor: string = this.getCardHeaderColor();
         let title: string       = this.getCardTitle( cardTitle );
-        let tasks: [TodoTask]   = this.getTasks(taskArray)
+        let tasks: [TodoTask]   = this.getTasks(taskArray);
 
 
         const newCard = new TodoCard(id, headerColor, title, tasks)
         this.todoCards.push( newCard );
         console.log("Todo Card created", newCard)
+        this.storeTodoCard(newCard);
+    }
+
+    storeTodoCard( todoCard: TodoCard ){
+        console.log('Todo Card stored to server')
+        this.http.put( 'https://todo-app-13093.firebaseio.com/data.json', todoCard )
+            .subscribe(
+                (response: Response) => {
+                    console.log('Data is stored ', response);
+                },
+                (error) => {
+                    console.log('Error occured ', error);
+                }
+            )            
     }
 
     getCardID():number{

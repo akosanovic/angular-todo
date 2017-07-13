@@ -1,5 +1,5 @@
 
-<div class="pageContainer page--container">
+<div class="pageContainer"  >
     <div class="pageContent">
         <div class="row">
 
@@ -14,7 +14,7 @@
             <!--Todo Cards Group-->        
             <div class=" col-sm-1 col-ms-6 col-md-8 col-lg-9 
                     mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnRigth">
-                <div class="row absolutePositionOverflowContent todo--cards--row">
+                <div class="row absolutePositionOverflowContent">
                    
                     <div *ngFor = 'let card of todoCardArray'>
                         
@@ -23,10 +23,12 @@
                             [todoCard] = 'card'>
                         </app-todo-card>
                         
-                        <!--ng-template is element that isn't rendered by default-->
-                        <ng-template [ngIf] = '!card'>
-                            No card to display
-                        </ng-template>
+
+                    </div>
+
+                    <!--ng-template is element that isn't rendered by default-->
+                    <div *ngIf = 'todoCardArray.length === 0'>
+                        No card to display
                     </div>
 
                 </div>						

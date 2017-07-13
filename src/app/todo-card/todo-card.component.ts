@@ -19,21 +19,27 @@ import { Component,
 
 
 export class TodoCardComponent implements OnInit {
-    
-
+    // PROPERTIES 
+    // event handling properties;
     showCardDrpodownMenu = false;
-    showTaskInput = false;    
-    
+    showTaskInput        = false;
+    disableCardTitle     = true;
+
     taskCounter;
 
     card: TodoCard;
 
     // Input Field for the new task
     @ViewChild('inputTaskDetails') inputTaskDetails: ElementRef;
+    @ViewChild('cardTitle') cardTitleRef: ElementRef;
     @Input('todoCard') newCard: TodoCard;
 
     taskArray: [TodoTask];
-    
+
+
+
+
+    // LIFE HOOKS
     constructor( private newTaskInput:ElementRef,
                  private todoTaskService: TodoTaskService ) { }
    
@@ -44,22 +50,56 @@ export class TodoCardComponent implements OnInit {
     }
 
 
-    showCardMenu(){
+
+    // METHODS
+    // click event handling    
+    toggleCardMenu() {
         this.showCardDrpodownMenu = !this.showCardDrpodownMenu;
     }
+    hideCardMenu() {
+        this.showCardDrpodownMenu = false;
+    }
+    // Card Menu Options :: BEGIN
+    editCardHeader(e):void {
+        e.stopPropagation();
+        this.disableCardTitle = false;
+        this.cardTitleRef.nativeElement.value = '';        
+        this.cardTitleRef.nativeElement.focus();
+        this.hideCardMenu();
+    }
+    changeCardTitle(){
+        let inputTitle:string = this.cardTitleRef.nativeElement.value
+       if (inputTitle){
+            this.card.title = inputTitle;
+       }
+       else {
+           this.cardTitleRef.nativeElement.value = this.card.title;
+       }
+       this.disableCardTitle = true;
+    }
+
+
+    deleteTodoCard(e) {
+        e.stopPropagation();
+        this.hideCardMenu();
+    
+    }// Card Menu Options :: END
+
+
     showNewTaskInput(){
-        this.showTaskInput = !this.showTaskInput;
-        this.inputTaskDetails.nativeElement.focus();
-        console.log("NEW task input focus")
+       if(this.showTaskInput === false){
+            this.showTaskInput = true;
+            this.inputTaskDetails.nativeElement.focus();
+       }
     }
 
 
     newTaskAdded(e) {        
         let taskDescription: string;
-        let taskId: number = this.taskArray.length;
+        
 
 
-        // if clicked on enter (replace this with custom directive)
+        /*if clicked on enter (replace this with custom directive)*/
         if(e.which === 13 && e.target.value ) {
             // Add new Todo Task Object to the Array
             taskDescription = this.inputTaskDetails.nativeElement.value;
@@ -68,11 +108,20 @@ export class TodoCardComponent implements OnInit {
             this.hideNewTaskInput(e);
         }
     }
+    newTaskInputBlured(e){
+        let taskDescription: string = this.inputTaskDetails.nativeElement.value;
+        if (taskDescription && taskDescription != ' '){
+            console.log('Task Description', taskDescription)
+            this.todoTaskService.addNewTask( taskDescription, false )
+        }
+        this.hideNewTaskInput(e)
 
+    }
 
 
     hideNewTaskInput(e) {
-        e.target.value = '';
+        e.target.value = ' ';
+        e.target.blur();
        setTimeout( ()=>{
             this.showTaskInput = false;
        }, 500 )
