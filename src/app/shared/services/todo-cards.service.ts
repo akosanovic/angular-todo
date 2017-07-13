@@ -19,7 +19,7 @@ export class TodoCardsService {
     todoCards: TodoCard[] = [
         new TodoCard(0, 'yellowCardHeader',    'Every Day', [new TodoTask( 1, 'Learn Angular 4', false)]),
         new TodoCard(1, 'turquoiseCardHeader', 'Monthly', [new TodoTask( 1, 'Learn Angular 4', false)] )
-    ]
+    ]   
     getCardsArray(){
         return this.todoCards;
     }

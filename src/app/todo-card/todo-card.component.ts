@@ -1,7 +1,9 @@
-import { TodoCardsService } from './../shared/services/todo-cards.service';
-
 import { TodoTask } from './../shared/todo-task.module';
 import { TodoCard } from './todo-card.model';
+
+import { TodoTaskService } from './../shared/services/todo-task.service';
+import { TodoCardsService } from './../shared/services/todo-cards.service';
+
 import { Component,
          ElementRef,
          Input,
@@ -14,7 +16,8 @@ import { Component,
     templateUrl: './todo-card.component.html',
     styleUrls  : ['./todo-card.component.scss'],
     // styles from todoTask can be applied 
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    providers: [TodoTaskService]
 })
 
 
@@ -42,6 +45,7 @@ export class TodoCardComponent implements OnInit {
 
     // LIFE HOOKS
     constructor( private newTaskInput:ElementRef,
+                 private todoTaskService: TodoTaskService,
                  private todoCardsService: TodoCardsService) { }
    
 
@@ -108,8 +112,8 @@ export class TodoCardComponent implements OnInit {
         if(e.which === 13 && e.target.value ) {
             // Add new Todo Task Object to the Array
             taskDescription = this.inputTaskDetails.nativeElement.value;
-            this.todoCardsService.addNewTask( taskDescription, false )
-            this.todoTaskService.addNewTask( taskDescription, false )
+            this.todoCardsService.addNewTask( taskDescription, false );
+            // this.todoTaskService.addNewTask( taskDescription, false )
             
             this.hideNewTaskInput(e);
         }
@@ -118,7 +122,7 @@ export class TodoCardComponent implements OnInit {
         let taskDescription: string = this.inputTaskDetails.nativeElement.value;
         if (taskDescription && taskDescription != ' '){
             console.log('Task Description', taskDescription)
-            this.todoTaskService.addNewTask( taskDescription, false )
+            this.todoCardsService.addNewTask( taskDescription, false )
         }
         this.hideNewTaskInput(e)
 

@@ -11,8 +11,6 @@ import {  Component,
 
 import { DataStorageService } from './../shared/services/data-storage/data-storage.service';
 
-import { TodoTask } from '../shared/todo-task.module';
-import { TodoCard } from '../todo-card/todo-card.model';
 
 import 'rxjs/Rx';
 
@@ -29,7 +27,7 @@ export class MainCardComponent implements OnInit {
     
      constructor( private renderer2: Renderer2, 
                  private dataStorageService: DataStorageService,
-                 private todoCardsService: TodoCardsService ) {}
+                 private todoCardsService  : TodoCardsService ) {}
     ngOnInit() {
     }
 
@@ -38,11 +36,11 @@ export class MainCardComponent implements OnInit {
     @Output() newCardCreated = new EventEmitter<any>();
    
    
-    oldestTaskArray: [TodoTask] = [
-        new TodoTask(1, "lorem ipsum", false)
-    ]
+    // oldestTaskArray: TodoTask[] = [
+    //     new TodoTask(1, "lorem ipsum", false)
+    // ]
     // ngClass - binding property
-    noOldTasks = this.oldestTaskArray.length <= 0 ? true : false;
+    // noOldTasks = this.oldestTaskArray.length <= 0 ? true : false;
     
 
    

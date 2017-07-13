@@ -1,7 +1,6 @@
 import { TodoTask } from './../todo-task.module';
-import { Injectable } from '@angular/core';
 
-@Injectable()
+
 export class TodoTaskService {
 
     constructor() { }
