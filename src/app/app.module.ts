@@ -46,7 +46,9 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
     BrowserAnimationsModule
   ],
   // Making one instance of the service for the whole application
+
   providers: [TodoCardsService, DataStorageService, TodoTaskService, MainCardService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
