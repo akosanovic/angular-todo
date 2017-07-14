@@ -1,17 +1,17 @@
-import { TodoTask } from '../shared/todo-task.module';
+import { TodoTaskModel } from '../shared/todo-task.model';
 
 // Blueprint for the objects we will create
 
-export class TodoCard {
+export class TodoCardModel {
      public id         : number;
      public title      : string;
      public headerColor: string;
-     public taskArray  : TodoTask[];
+     public taskArray  : TodoTaskModel[];
 
      constructor ( id: number,
                    color: string,
                    title?: string,
-                   taskArray?: TodoTask[]){
+                   taskArray?: TodoTaskModel[]){
 
         this.id          = id;
         this.title       = title!== undefined ? title : "Edit category name";

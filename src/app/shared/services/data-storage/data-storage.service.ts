@@ -1,4 +1,4 @@
-import { TodoCard } from '../../../todo-card/todo-card.model';
+import { TodoCardModel } from './../../../todo-card/todo-card.model';
 import { TodoCardsService } from '../todo-cards.service';
 
 import { Injectable, OnInit } from '@angular/core';
@@ -19,10 +19,21 @@ export class DataStorageService implements OnInit{
     }
     getData(){
         return this.http.get('https://todo-app-13093.firebaseio.com/data.json')
-                .subscribe(
-                    (response: Response ) => {
-                        // Reciving String of todo cards that we need to extracth JS objects from
-                        const todoCards: TodoCard[] = response.json()
+                // If there is no taskArray in card add taskArray field
+                .map(
+                    (response: Response) => {
+                        // Reciving String of todo cards that we need to extracth JS objects from                        
+                        const todoCards: TodoCardModel[] = response.json()
+                        for( let cards of todoCards ){
+                            if (!cards.taskArray){
+                                cards.taskArray = [];
+                            }
+                        }
+                        return todoCards;
+                    }
+                )
+                .subscribe (
+                    ( todoCards: TodoCardModel[] ) => {
                         // assinging the recived, extracted JS object to the TodoCardService 
                         this.todoCardsService.setTodoCards(todoCards);
                     }

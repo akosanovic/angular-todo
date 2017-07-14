@@ -1,4 +1,4 @@
-import { TodoTask } from './../shared/todo-task.module';
+import { TodoTaskModel } from './../shared/todo-task.model';
 import { MainCardService } from './../shared/services/main-card.service';
 import { TodoCardsService } from './../shared/services/todo-cards.service';
 import { Response } from '@angular/http';
@@ -21,7 +21,7 @@ import {  Component, EventEmitter, NgModule, OnInit,  Output, ViewChild, ViewEnc
 
 export class MainCardComponent implements OnInit {
 
-    oldestTaskArray: TodoTask[] = [];
+    oldestTaskArray: TodoTaskModel [] = [];
     floatingButtonsHidden = true;
    
     // Outputing events

@@ -1,9 +1,11 @@
-import { TodoTask } from './../shared/todo-task.module';
-import { TodoCard } from './todo-card.model';
+import { TodoCardModel } from './todo-card.model';
+import { Response } from '@angular/http';
+import { DataStorageService } from './../shared/services/data-storage/data-storage.service';
+
 
 import { TodoTaskService } from './../shared/services/todo-task.service';
 import { TodoCardsService } from './../shared/services/todo-cards.service';
-
+import "rxjs/Rx"
 import { Component,
          ElementRef,
          Input,
@@ -30,7 +32,7 @@ export class TodoCardComponent implements OnInit {
 
     taskCounter;
 
-    card: TodoCard;
+    card: TodoCardModel;
 
     // Input Field for the new task
     @ViewChild('inputTaskDetails') inputTaskDetails: ElementRef;
@@ -38,7 +40,7 @@ export class TodoCardComponent implements OnInit {
     
     // IMPORTANT
     // creating new instance of the todo card, listen for event when card is created
-    @Input('todoCard') newCard: TodoCard;
+    @Input('todoCard') newCard: TodoCardModel;
 
     
 
@@ -46,7 +48,8 @@ export class TodoCardComponent implements OnInit {
     // LIFE HOOKS
     constructor( private newTaskInput:ElementRef,
                  private todoTaskService: TodoTaskService,
-                 private todoCardsService: TodoCardsService) { }
+                 private todoCardsService: TodoCardsService,
+                 private dataStorageService: DataStorageService) { }
    
 
     ngOnInit() {
@@ -91,7 +94,12 @@ export class TodoCardComponent implements OnInit {
 
         this.todoCardsService.onCardDelete(this.card.id);
         this.hideCardMenu();
-    
+        this.dataStorageService.storeData()
+            .subscribe(
+                (response: Response) => {
+                    console.log('Data stored', response)
+                }
+            )
     }// Card Menu Options :: END
 
 

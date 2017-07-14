@@ -1,5 +1,5 @@
 
-export class TodoTask {
+export class TodoTaskModel {
     public id         : number;
     public description: string;
     public checked    : boolean;

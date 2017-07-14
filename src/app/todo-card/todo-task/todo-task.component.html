@@ -19,10 +19,16 @@
             </div>          
         </div>	
         <!--Custom Checkbox Group :: BEGIN-->										
-        <input type     = "text"
-               class    = "inputGroupDescription"
+        <input class    = "inputGroupDescription"
+               type     = "text"
                name     = "todo card description"
                readonly = "readonly"
                value    = "{{task.description}}">
+        <div class="dropdownMenuButton">
+            <a href="#" 
+                class="cardMenuButton">
+                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </a>
+        </div>
     </div>
   </li>

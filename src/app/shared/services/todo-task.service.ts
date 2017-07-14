@@ -1,4 +1,5 @@
-import { TodoTask } from './../todo-task.module';
+import { TodoTaskModel } from './../todo-task.model';
+
 
 
 export class TodoTaskService {
@@ -6,18 +7,18 @@ export class TodoTaskService {
     constructor() { }
 
 
-    taskArray: TodoTask[] = []
+    taskArray: TodoTaskModel[] = []
 
     addNewTask( description:string, checked?: boolean ){
         let id: number              = this.getTaskID();
         let taskDescription: string = description;
         let checkedStatus: boolean  = this.getCheckedStatus(checked);
 
-        let newTask: TodoTask = new TodoTask( id, taskDescription, checkedStatus );
+        let newTask: TodoTaskModel = new TodoTaskModel( id, taskDescription, checkedStatus );
         this.taskArray.unshift( newTask );
     }
 
-    getTasks(): TodoTask[] {
+    getTasks(): TodoTaskModel[] {
         return this.taskArray;
     }
 

@@ -1,5 +1,6 @@
-import { TodoTaskService } from './../shared/services/todo-task.service';
-import { TodoTask } from './../shared/todo-task.module';
+import { TodoTaskService } from './../../shared/services/todo-task.service';
+import { TodoTaskModel } from './../../shared/todo-task.model';
+
 import { TaskScheduler } from 'protractor/built/taskScheduler';
 import { Component, 
         Input,
@@ -15,7 +16,7 @@ import { Component,
 
 export class TodoTaskComponent implements OnInit {
   
-    @Input('todoTask') task: TodoTask;
+    @Input('todoTask') task: TodoTaskModel;
     
     taskChecked:boolean = false;
 

@@ -1,3 +1,5 @@
+import { TodoTaskComponent } from './todo-card/todo-task/todo-task.component';
+import { CursorPointerDirective } from './shared/directives/cursor-pointer/cursor-pointer.directive';
 import { MainCardService } from './shared/services/main-card.service';
 import { TodoTaskService } from './shared/services/todo-task.service';
 import { DataStorageService } from './shared/services/data-storage/data-storage.service';
@@ -12,7 +14,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { MainCardComponent } from './main-card/main-card.component';
 import { TodoCardComponent } from './todo-card/todo-card.component';
-import { TodoTaskComponent } from './todo-task/todo-task.component';
+
 
 // Directives
 import { ClickOutsideDirective } from './../../node_modules/angular2-click-outside/clickOutside.directive';
@@ -28,12 +30,13 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
     AppComponent,
     MainCardComponent,
     TodoCardComponent,
-    TodoTaskComponent,
+    TodoTaskComponent ,
     FocusDirective,
 
     // directives
     CheckedBackgroundDirective,
-    ClickOutsideDirective
+    ClickOutsideDirective,
+    CursorPointerDirective
   ],
   imports: [
     BrowserModule,

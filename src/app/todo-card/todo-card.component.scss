@@ -1,5 +1,5 @@
 @import "../../styles.scss";
-@import "../todo-task/todo-task.component";
+
 
 // Other Todo Cards
 .todoCardContainer {
@@ -176,4 +176,71 @@
 }
 
 
-// 
+// Input Group from TodoTask
+.taskItemContainer {
+	padding: $lh $lh/2;
+	background-color: $white;
+
+	&.taskChecked {
+		background-color: #f6f9ff;
+	}
+}
+
+	//  Input Group is consist of:
+	//  - Absolutly Positioned Prefix: icon or checkbox 
+	//  - Input Group Description: input text element that takes full width 
+	//  Used for:
+	//  		- Cards Header - ability to change the title of the card
+	//  		- Task Items   - User can set the description of thask and change it on double click
+
+.inputGroup {
+display : inline-block;
+width: 100%;
+padding-left: $lh+$lh/2;
+position: relative;
+vertical-align: middle;
+
+
+.absolutePositionedPrefix {
+	position: absolute;
+	top : 0;
+	left: 0;
+
+	display: inline-block;
+	width : $lh;
+	height: $lh;
+	vertical-align: bottom;
+	line-height: $lh;
+	.customCheckbox {
+		display: inline-block;		
+	}
+	.iconContainer{
+		text-align: right;
+		.fa{
+			font-size: $fs;
+		}
+	}
+}
+		
+
+	.inputGroupDescription {
+		display: inline-block;
+		width  : 100%;
+		border : 0;
+		vertical-align: bottom;		
+
+		background: transparent;
+
+		color: inherit;
+		font-size  : $fs;
+		font-family: $ff-roboto;
+		font-weight: 400;
+		text-overflow: ellipsis;
+		&:focus{
+			outline: 0;
+		}
+	}
+	.dropdownMenuButton {
+		display: inline-block;
+	}
+}

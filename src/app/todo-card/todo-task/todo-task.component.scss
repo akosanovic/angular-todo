@@ -1,4 +1,4 @@
-@import "../../styles.scss";
+@import "../../../styles.scss";
 
 .taskItemContainer {
 	padding: $lh $lh/2;
@@ -63,6 +63,9 @@
 				outline: 0;
 			}
 		}
+		.dropdownMenuButton {
+			display: inline-block;
+		}
 	}
 
 	// Custom Checkbox
@@ -110,7 +113,7 @@
 		/* checked mark aspect */
 		[type="checkbox"]:not(:checked) + label:after,
 		[type="checkbox"]:checked + label:after {
-			content: url('../../assets/images/check-icon.svg');
+			content: url('../../../assets/images/check-icon.svg');
 			
 			position: absolute;
 			left: 5px;
