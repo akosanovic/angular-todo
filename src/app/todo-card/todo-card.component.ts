@@ -51,7 +51,7 @@ export class TodoCardComponent implements OnInit {
 
     ngOnInit() {
         this.card           = this.newCard;
-        this.card.taskArray = this.todoCardsService.getTasks();
+        this.card.taskArray = this.newCard.taskArray;
         // this.taskArray = this.todoTaskService.taskArray;
     }
 
@@ -105,24 +105,24 @@ export class TodoCardComponent implements OnInit {
 
     newTaskAdded(e) {        
         let taskDescription: string;
-        
-
 
         /*if clicked on enter (replace this with custom directive)*/
         if(e.which === 13 && e.target.value ) {
             // Add new Todo Task Object to the Array
             taskDescription = this.inputTaskDetails.nativeElement.value;
-            this.todoCardsService.addNewTask( taskDescription, false );
+           
+            this.todoCardsService.addNewTask( this.card.id, taskDescription, false );
             // this.todoTaskService.addNewTask( taskDescription, false )
             
             this.hideNewTaskInput(e);
         }
     }
+
     newTaskInputBlured(e){
         let taskDescription: string = this.inputTaskDetails.nativeElement.value;
         if (taskDescription && taskDescription != ' '){
             console.log('Task Description', taskDescription)
-            this.todoCardsService.addNewTask( taskDescription, false )
+            this.todoCardsService.addNewTask( this.card.id, taskDescription, false );
         }
         this.hideNewTaskInput(e)
 

@@ -1,7 +1,6 @@
 import { TodoCardsService } from './shared/services/todo-cards.service';
 import { DataStorageService } from './shared/services/data-storage/data-storage.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { TodoTask } from './shared/todo-task.module';
 import { TodoCard } from './todo-card/todo-card.model';
 
 import "rxjs/Rx";
@@ -16,8 +15,6 @@ import "rxjs/Rx";
 export class AppComponent implements OnInit {
     todoCardCounter:number = 0;
 
-
-    @Input() todoCard: TodoCard;
     todoCardArray: TodoCard[] = [];
    
     constructor( private todoCardService: TodoCardsService ,
@@ -25,7 +22,13 @@ export class AppComponent implements OnInit {
 
     ngOnInit(){
         this.todoCardArray =  this.todoCardService.getCardsArray();
-    }    
+        this.todoCardService.todoCardsListChanged
+             .subscribe(
+                 (todoCards: TodoCard[]) => {
+                     this.todoCardArray = todoCards;
+                 }
+             )
+    }   
 
 
     // onTodoCardCreated( e ){

@@ -1,53 +1,54 @@
+import { TodoTask } from './../shared/todo-task.module';
+import { MainCardService } from './../shared/services/main-card.service';
 import { TodoCardsService } from './../shared/services/todo-cards.service';
 import { Response } from '@angular/http';
-import {  Component,
-          EventEmitter,
-          NgModule,
-          OnInit,
-          Output,
-          Renderer2,
-          ViewChild, 
-          ElementRef } from '@angular/core';
-
 import { DataStorageService } from './../shared/services/data-storage/data-storage.service';
-
-
 import 'rxjs/Rx';
+
+import {  Component, EventEmitter, NgModule, OnInit,  Output, ViewChild, ViewEncapsulation, ElementRef } from '@angular/core';
+
+
 
 
 @Component({
-  selector   : 'app-main-card',
-  templateUrl: './main-card.component.html',
-  styleUrls  : ['./main-card.component.scss']
+    selector     : 'app-main-card',
+    templateUrl  : './main-card.component.html',
+    styleUrls    : ['./main-card.component.scss'],
+    encapsulation: ViewEncapsulation.None
 })
 
 
 
 export class MainCardComponent implements OnInit {
-    
-     constructor( private renderer2: Renderer2, 
-                 private dataStorageService: DataStorageService,
-                 private todoCardsService  : TodoCardsService ) {}
-    ngOnInit() {
-    }
 
+    oldestTaskArray: TodoTask[] = [];
     floatingButtonsHidden = true;
+   
     // Outputing events
     @Output() newCardCreated = new EventEmitter<any>();
-   
-   
-    // oldestTaskArray: TodoTask[] = [
-    //     new TodoTask(1, "lorem ipsum", false)
-    // ]
-    // ngClass - binding property
-    // noOldTasks = this.oldestTaskArray.length <= 0 ? true : false;
     
+   noOldTasks: boolean = false;
 
-   
+
+
+
+
+    constructor( private mainCardService: MainCardService,
+                 private dataStorageService: DataStorageService,
+                 private todoCardsService  : TodoCardsService ) {}
+    
+    ngOnInit() {
+        this.oldestTaskArray = this.mainCardService.oldestTaskArray;
+        this.noOldTasks      = this.oldestTaskArray.length <= 0 ? true : false;
+       
+    }
+    
+    
 
     
     toggleFloatingButtons(e) {
         e.stopPropagation();
+
         console.log('Show floating buttons - button clicked')
         this.floatingButtonsHidden = !this.floatingButtonsHidden;
     }
@@ -62,8 +63,7 @@ export class MainCardComponent implements OnInit {
         e.stopPropagation();
         
         // this.newCardCreated.emit()
-        this.todoCardsService.createTodoCard();
-
+        this.todoCardsService.addTodoCard();
         this.floatingButtonsHidden = true;
         this.dataStorageService.storeData()
             .subscribe(

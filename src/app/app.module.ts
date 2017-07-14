@@ -1,3 +1,4 @@
+import { MainCardService } from './shared/services/main-card.service';
 import { TodoTaskService } from './shared/services/todo-task.service';
 import { DataStorageService } from './shared/services/data-storage/data-storage.service';
 import { CheckedBackgroundDirective } from './shared/directives/checked-background/checked-background.directive';
@@ -42,7 +43,7 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
     BrowserAnimationsModule
   ],
   // Making one instance of the service for the whole application
-  providers: [TodoCardsService, DataStorageService],
+  providers: [TodoCardsService, DataStorageService, TodoTaskService, MainCardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,10 @@
+import { MainCardService } from './main-card.service';
 import { TodoTaskService } from './todo-task.service';
 
 // Modules Used
 import { TodoTask } from './../todo-task.module';
 import { TodoCard } from './../../todo-card/todo-card.model';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 
@@ -11,43 +12,44 @@ import { Http, Response } from '@angular/http';
 @Injectable()
 export class TodoCardsService {
 
-    constructor( private todoTaskService: TodoTaskService,
+    todoCardsListChanged = new EventEmitter<TodoCard[]>();
+
+    constructor( private mainCardService: MainCardService, 
+                 private todoTaskService: TodoTaskService,
                  private http: Http ) { }
 
     
 
-    todoCards: TodoCard[] = [
-        new TodoCard(0, 'yellowCardHeader',    'Every Day', [new TodoTask( 1, 'Learn Angular 4', false)]),
+    private todoCards: TodoCard[] = [
+        new TodoCard(0, 'yellowCardHeader',    'Every Day',
+                    [ new TodoTask( 1, 'Learn Angular 4', false),
+                      new TodoTask( 2, 'How to tell which card stores which tasks?', false),
+                      new TodoTask( 3, 'How to find oldest tasks?', false),
+                      new TodoTask( 4, 'What is the problem with task group in todo cards?', false),
+                      new TodoTask( 5, 'Binding to the data property: card & task', false), 
+                      new TodoTask( 6, 'Create custom directive - event: \'enter pressed \'  ', false)]),
         new TodoCard(1, 'turquoiseCardHeader', 'Monthly', [new TodoTask( 1, 'Learn Angular 4', false)] )
     ]   
     getCardsArray(){
-        return this.todoCards;
+        return this.todoCards.slice();
     }
 
-    createTodoCard():void {
+    addTodoCard():void {
         let id: number          = this.getCardID();
         let headerColor: string = this.getCardHeaderColor();
         let title: string       = this.getCardTitle( );
         let tasks: TodoTask[]   = this.getTasks();
-
-
         const newCard = new TodoCard(id, headerColor, title, tasks)
+
+
+        console.log('New Card created', newCard);
         this.todoCards.push( newCard );
+        this.todoCardsListChanged.emit(this.todoCards.slice());
     }
     
-    addTodoCard( cardTitle?:string, taskArray?: TodoTask[] ):void{
-        let id: number          = this.getCardID();
-        let headerColor: string = this.getCardHeaderColor();
-        let title: string       = this.getCardTitle( cardTitle );
-        let tasks: TodoTask[]   = this.getTasks(taskArray);
-
-
-        const newCard = new TodoCard(id, headerColor, title, tasks)
-        this.todoCards.push( newCard );
-        console.log("Todo Card created", newCard)
-    }
+  
     getTodoCards(){
-        return this.todoCards;
+        return this.todoCards.slice();
     }
     setTodoCards( cards: TodoCard[] ) {
         this.todoCards = cards;
@@ -75,16 +77,32 @@ export class TodoCardsService {
         return title;
     }
     getTasks(taskArray?: TodoTask[] ): TodoTask[]{
-        let tasks: TodoTask[] = taskArray ? taskArray : this.todoTaskService.getTasks();
+        let tasks: TodoTask[] = taskArray ? taskArray : [];
         return tasks;
     }
 
+
+
+
+
     // EDITS
-    addNewTask( description: string, checked: boolean ){
-        console.log('Fill out \'addNewTask\' method in the \'TodoCardsService\' ')
-        this.todoTaskService.addNewTask(description, checked)
+    addNewTask( cardID: number,  description: string, checked: boolean  ): void{
+       
+        for(let i = 0; i < this.todoCards.length; i++) {
+            if(this.todoCards[i]['id'] === cardID){
+                let id:number   = this.todoCards[i].taskArray.length;
+                let newTodoTask: TodoTask = new TodoTask(id, description, checked )
+                
+                this.todoCards[i].taskArray.unshift( newTodoTask );
+                // Adding new task to the Main Card (oldest tasks)
+                this.mainCardService.getTasks( newTodoTask );
+            }
+        }
+       
     }
-    onTitleChange(  id: number, newTitle: string ){
+
+
+    onTitleChange(  id: number, newTitle: string ): void{
         this.todoCards[id].title = newTitle;
         console.log('new title is ', newTitle);
     }
@@ -94,6 +112,7 @@ export class TodoCardsService {
                 this.todoCards.splice(i, 1);
             }
         }
+        this.todoCardsListChanged.emit(this.todoCards.slice());
     }
 
 }
