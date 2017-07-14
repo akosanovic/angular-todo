@@ -67,6 +67,16 @@
 			display: inline-block;
 		}
 	}
+	.inputGroupAbsoluteSufix{
+		position: absolute;
+		right: 0;
+		top: 0;
+		
+		display: inline-block;
+		text-align: center;
+		width: $lh;
+		height: $lh;
+	}
 
 	// Custom Checkbox
 	.customCheckbox {
@@ -75,8 +85,6 @@
 			width : $lh;
 			height: $lh;
 		}
-		
-
 		/* Base for label styling */
 		[type="checkbox"]:not(:checked),
 		[type="checkbox"]:checked {

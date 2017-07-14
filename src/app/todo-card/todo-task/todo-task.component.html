@@ -24,11 +24,30 @@
                name     = "todo card description"
                readonly = "readonly"
                value    = "{{task.description}}">
-        <div class="dropdownMenuButton">
-            <a href="#" 
-                class="cardMenuButton">
-                    <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+        <div class="inputGroupAbsoluteSufix">
+            <a href="#" class="taskMenuButton">
+                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>
         </div>
     </div>
+    <!--Dropdown Menu :: BEGIN  -->
+    <div class="dropDownMenuContainer">
+        <ul class="dropdownMenuList">
+            <li class="dropdownMenuItem">
+                <a href="#" 
+                    class="dropdownMenuLink"
+                    (click)='editCardHeader($event)'>
+                    Edit Card
+                </a>
+            </li>
+            <li class="dropdownMenuItem">
+                <a href="#" 
+                    class="dropdownMenuLink"
+                    (click)='deleteTodoCard($event)'>
+                    Delete Card
+                </a>
+            </li>
+        </ul>
+     </div><!--Dropdown Menu :: END  -->
+    
   </li>
