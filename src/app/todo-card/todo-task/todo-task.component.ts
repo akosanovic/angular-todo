@@ -21,7 +21,9 @@ export class TodoTaskComponent implements OnInit {
     taskChecked:boolean = false;
 
     randomTaskNumber: number = this.genarateRandomNumber();
-   
+    showTaskDrpodownMenu: boolean = false;
+
+
     constructor( private todoTaskService: TodoTaskService) {}
     
 
@@ -42,5 +44,13 @@ export class TodoTaskComponent implements OnInit {
         this.taskChecked = !this.taskChecked;
 
         this.todoTaskService.onTaskStatusChange( this.task['id'], this.taskChecked );
+    }
+
+    // Dropdown Menu
+    toggleTaskDropdownMenu(){
+        this.showTaskDrpodownMenu = !this.showTaskDrpodownMenu;
+    }
+    closeDropdownMenu(){
+        this.showTaskDrpodownMenu = false;
     }
 }

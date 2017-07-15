@@ -108,11 +108,19 @@ export class TodoCardsService {
     onCardDelete( deletedCardID:number ){
         for(let i = 0; i < this.todoCards.length; i++){
             if( this.todoCards[i]['id'] === deletedCardID ){
-                this.todoCards.splice(i, 1);
+                let card = this.todoCards.splice(i, 1);
+                this.destroyTodoCard(card[0]);
             }
         }
         this.todoCardsListChanged.next(this.todoCards.slice());
         
+    }
+    destroyTodoCard( card: TodoCardModel ){
+        card.headerColor = null;
+        card.taskArray = null;
+        card.id = null;
+        card.title = null;
+        card = null;
     }
 
 }

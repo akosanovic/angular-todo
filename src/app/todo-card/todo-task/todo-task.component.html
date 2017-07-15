@@ -24,30 +24,43 @@
                name     = "todo card description"
                readonly = "readonly"
                value    = "{{task.description}}">
-        <div class="inputGroupAbsoluteSufix">
-            <a href="#" class="taskMenuButton">
-                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-            </a>
-        </div>
+       
+     
+     
+       <!--DropDown Menu Button :: BEGIN -->
+        <a  href="#" 
+            class="taskMenuButton"
+            (click)='toggleTaskDropdownMenu()'
+            (clickOutside)='closeDropdownMenu()'>
+            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+        </a>
+       <!--DropDown Menu Button :: END -->        
     </div>
     <!--Dropdown Menu :: BEGIN  -->
-    <div class="dropDownMenuContainer">
-        <ul class="dropdownMenuList">
-            <li class="dropdownMenuItem">
-                <a href="#" 
-                    class="dropdownMenuLink"
-                    (click)='editCardHeader($event)'>
-                    Edit Card
-                </a>
-            </li>
-            <li class="dropdownMenuItem">
-                <a href="#" 
-                    class="dropdownMenuLink"
-                    (click)='deleteTodoCard($event)'>
-                    Delete Card
-                </a>
-            </li>
-        </ul>
-     </div><!--Dropdown Menu :: END  -->
+    <div 
+        class="todoTaskDropdownMenu"
+        [ngClass] = "{'showTodoTaskDropdownMenu': showTaskDrpodownMenu}">
+        <div class="dropDownMenuContainer">
+            <ul class="dropdownMenuList">
+                <li class="dropdownMenuItem">
+                    <a href="#" 
+                        class="dropdownMenuLink"
+                        (click)='editTaskDescription($event)'>
+                        Edit Task
+                    </a>
+                </li>
+                <li class="dropdownMenuItem">
+                    <a href="#" 
+                        class="dropdownMenuLink"
+                        (click)='deleteTodoCard($event)'>
+                        Delete Task
+                    </a>
+                </li>
+            </ul>
+        </div>	
+
+    </div><!-- On Click display Drop Down Menu :: END  -->
+    
+    <!--Dropdown Menu :: END  -->
     
   </li>

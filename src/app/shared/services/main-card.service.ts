@@ -7,7 +7,9 @@ import { Injectable, OnInit } from '@angular/core';
 @Injectable()
 export class MainCardService implements OnInit{
 
-    taskArray: TodoTaskModel[] = []
+    taskArray: TodoTaskModel[] = [
+        new TodoTaskModel(1, "Testing Task", false),
+    ]
 
     oldestTaskArray: TodoTaskModel [] = this.taskArray;
 

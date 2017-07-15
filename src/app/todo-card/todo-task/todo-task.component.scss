@@ -9,74 +9,125 @@
 	}
 }
 
-	//  Input Group is consist of:
-	//  - Absolutly Positioned Prefix: icon or checkbox 
-	//  - Input Group Description: input text element that takes full width 
-	//  Used for:
-	//  		- Cards Header - ability to change the title of the card
-	//  		- Task Items   - User can set the description of thask and change it on double click
+//  Input Group is consist of:
+//  - Absolutly Positioned Prefix: icon or checkbox 
+//  - Input Group Description: input text element that takes full width 
+//  Used for:
+//  		- Cards Header - ability to change the title of the card
+//  		- Task Items   - User can set the description of thask and change it on double click
 
-	.inputGroup {
-		display : inline-block;
-		width: 100%;
-		padding-left: $lh+$lh/2;
-		position: relative;
-		vertical-align: middle;
+.inputGroup {
+	display : inline-block;
+	width: 100%;
+	padding-left: $lh+$lh/2;
+	position: relative;
+	vertical-align: middle;
 
 
-		.absolutePositionedPrefix {
-			position: absolute;
-			top : 0;
-			left: 0;
-
-			display: inline-block;
-			width : $lh;
-			height: $lh;
-			vertical-align: bottom;
-			line-height: $lh;
-			.customCheckbox {
-				display: inline-block;		
-			}
-			.iconContainer{
-				text-align: right;
-				.fa{
-					font-size: $fs;
-				}
-			}
-		}
-		
-
-		.inputGroupDescription {
-			display: inline-block;
-			width  : 100%;
-			border : 0;
-			vertical-align: bottom;		
-
-			background: transparent;
-
-			color: inherit;
-			font-size  : $fs;
-			font-family: $ff-roboto;
-			font-weight: 400;
-			text-overflow: ellipsis;
-			&:focus{
-				outline: 0;
-			}
-		}
-		.dropdownMenuButton {
-			display: inline-block;
-		}
-	}
-	.inputGroupAbsoluteSufix{
+	.absolutePositionedPrefix {
 		position: absolute;
-		right: 0;
-		top: 0;
-		
+		top : 0;
+		left: 0;
+
 		display: inline-block;
-		text-align: center;
-		width: $lh;
+		width : $lh;
 		height: $lh;
+		vertical-align: bottom;
+		line-height: $lh;
+		.customCheckbox {
+			display: inline-block;		
+		}
+		.iconContainer{
+			text-align: right;
+			.fa{
+				font-size: $fs;
+			}
+		}
 	}
+	
+
+	.inputGroupDescription {
+		display: inline-block;
+		width  : 100%;
+		border : 0;
+		vertical-align: bottom;		
+
+		background: transparent;
+
+		color: inherit;
+		font-size  : $fs;
+		font-family: $ff-roboto;
+		font-weight: 400;
+		text-overflow: ellipsis;
+		&:focus{
+			outline: 0;
+		}
+	}
+}
+ // Drop Down Menu :: BEGIN
+.taskMenuButton {
+	position: absolute;
+	top  : 0;
+	right: 0;
+	padding : 0 $lh/2;
+	.fa-ellipsis-v {
+		font-size: 19px;
+		line-height: $lh;
+		vertical-align: middle;
+	}
+}
+.todoTaskDropdownMenu {
+	@include transition(height 0.5s ease, overflow 0.7s ease-in-out );		
+	position: absolute;
+	top  : $lh*2;
+	right: $lh;
+	display: block;
+
+	height: 0;
+	z-index: 20;
+	overflow: hidden;
+
+	&.showTodoTaskDropdownMenu {
+		@include transition(height 0.5s ease-in-out, overflow 0.7s ease-in-out );
+		overflow: visible;
+		height: 100%;
+	}
+
+
+	.dropDownMenuContainer {
+		@include box-shadow( 0px 1px 5px 1px rgba(215,215,215,1) );
+		background-color: $white;
+		color: $gray-dark;
+
+		.dropdownMenuList {
+			list-style-type: none;
+
+			.dropdownMenuItem {
+				border-bottom: 1px solid $blue-light;
+				&:hover{
+					background-color: #f6f9ff;
+				}
+				&:last-child{
+					border-bottom: 0;
+				}
+				.dropdownMenuLink {
+					display: inline-block;
+					width: 100%;
+					padding: 1rem $lh;
+
+					text-align: left;
+					text-transform: uppercase;
+					font-size: 12px;
+					line-height: 1.5;
+				}
+			}	
+		}
+	}
+}// Drop Down Menu :: END
+	
+
+
+
 
 	// Custom Checkbox
 	.customCheckbox {
