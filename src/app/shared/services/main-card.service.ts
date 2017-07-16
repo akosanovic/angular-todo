@@ -1,30 +1,53 @@
+import { TodoCardsService } from './todo-cards.service';
 import { TodoTaskModel } from './../todo-task.model';
 import { Injectable, OnInit } from '@angular/core';
+import 'rxjs/Rx';
+
 
 @Injectable()
 export class MainCardService implements OnInit{
 
     taskArray: TodoTaskModel[] = [
-        // new TodoTaskModel(1, "Testing Task", false),
+        new TodoTaskModel(1, "Testing Task", false),
     ]
 
-    oldestTaskArray: TodoTaskModel [] = [];
+    oldestTaskArray: TodoTaskModel [] = [
+        new TodoTaskModel(1, "Testing Task", false)        
+    ];
 
-    constructor() { }
+    constructor( private todoCardsService: TodoCardsService ) { }
 
-    ngOnInit (){
-        this.oldestTaskArray = this.taskArray;
+    ngOnInit(){
+        console.log('Do you even work, is there ngOnInit in services ')
+        this.oldestTaskArray = this.taskArray; 
+         let todoCards = this.todoCardsService.getTodoCards();
+        console.log('Main Card Service cards,  ', todoCards)
+        for( let card of todoCards ){
+            for( let task of card.taskArray ){
+                this.taskArray.push(task)
+            }
+        }
+        console.log('Task Array: ', this.taskArray)
+        return this.taskArray;       
     }
 
-    getTasks( todoTasks: TodoTaskModel ){        
-        this.taskArray.push(todoTasks);
+    getTasks()  {  
+        // let todoCards = this.todoCardsService.getTodoCards();
+        // console.log('Main Card Service cards,  ', todoCards)
+        // for( let card of todoCards ){
+        //     for( let task of card.taskArray ){
+        //         this.taskArray.push(task)
+        //     }
+        // }
+        // console.log('Task Array: ', this.taskArray)
+        // return this.taskArray;
     }
     
     removeTasks( todoTask: TodoTaskModel ){
         
         for (let i = 0; i < this.taskArray.length; i++){
             if (this.taskArray[i] === todoTask){
-                this.taskArray.splice( i, 1 );
+                this.taskArray.splice( i, 1);
             }
         }
         // if the task is removed from main-card service remove it in the todo card where 

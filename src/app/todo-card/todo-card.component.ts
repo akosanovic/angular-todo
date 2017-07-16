@@ -42,6 +42,8 @@ export class TodoCardComponent implements OnInit {
     // creating new instance of the todo card, listen for event when card is created
     @Input('todoCard') newCard: TodoCardModel;
 
+    // OBSERVABLES
+
     
 
 
@@ -86,6 +88,8 @@ export class TodoCardComponent implements OnInit {
            this.cardTitleRef.nativeElement.value = this.card.title;
        }
        this.disableCardTitle = true;
+        this.dataStorageService.storeData();
+       
     }
 
 
@@ -94,12 +98,7 @@ export class TodoCardComponent implements OnInit {
 
         this.todoCardsService.onCardDelete(this.card.id);
         this.hideCardMenu();
-        this.dataStorageService.storeData()
-            .subscribe(
-                (response: Response) => {
-                    console.log('Data stored', response)
-                }
-            )
+        this.dataStorageService.storeData();
     }// Card Menu Options :: END
 
 
@@ -107,6 +106,7 @@ export class TodoCardComponent implements OnInit {
        if(this.showTaskInput === false){
             this.showTaskInput = true;
             this.inputTaskDetails.nativeElement.focus();
+
        }
     }
 
@@ -121,6 +121,8 @@ export class TodoCardComponent implements OnInit {
            
             this.todoCardsService.addNewTask( this.card.id, taskDescription, false );
             // this.todoTaskService.addNewTask( taskDescription, false )
+
+            this.dataStorageService.storeData();
             
             this.hideNewTaskInput(e);
         }

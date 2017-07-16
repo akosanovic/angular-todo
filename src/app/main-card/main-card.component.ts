@@ -1,3 +1,4 @@
+import { setTimeout } from 'timers';
 import { TodoTaskModel } from './../shared/todo-task.model';
 import { MainCardService } from './../shared/services/main-card.service';
 import { TodoCardsService } from './../shared/services/todo-cards.service';
@@ -21,7 +22,7 @@ import {  Component, EventEmitter, NgModule, OnInit,  Output, ViewChild, ViewEnc
 
 export class MainCardComponent implements OnInit {
 
-    oldestTaskArray: TodoTaskModel[] = [];
+    oldestTaskArray = [];
     floatingButtonsHidden = true;
    
     // Outputing events
@@ -37,9 +38,23 @@ export class MainCardComponent implements OnInit {
                  private todoCardsService  : TodoCardsService ) {}
     
     ngOnInit() {
-        this.oldestTaskArray = this.mainCardService.oldestTaskArray;
-        this.noOldTasks      = this.oldestTaskArray.length <= 0 ? true : false;
-       
+        
+        this.noOldTasks      = false;
+        this.todoCardsService.getTodoTasks();
+        // TodoTask Observable
+        this.todoCardsService.todoTaskObservable
+            .subscribe(
+                (todoTask: TodoTaskModel[]) => {
+                    console.log('new todoTask', todoTask)
+                    this.oldestTaskArray = todoTask;
+                }
+            )
+        // setTimeout(
+        //     () => {
+        //         this.oldestTaskArray = this.todoCardsService.getTodoTasks();
+        //         console.log('Main card Oldest task array, ', this.oldestTaskArray)
+        //     }, 1000
+        // )
     }
     
     
@@ -64,15 +79,7 @@ export class MainCardComponent implements OnInit {
         // this.newCardCreated.emit()
         this.todoCardsService.addTodoCard();
         this.floatingButtonsHidden = true;
-        this.dataStorageService.storeData()
-            .subscribe(
-                (response: Response ) => {
-                    console.log('Data Stored to Firebase', response);
-                },
-                (error) => {
-                    console.log( "Error occured", error );
-                }
-            );
+        this.dataStorageService.storeData();
     }
 
 

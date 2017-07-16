@@ -1,7 +1,6 @@
 import { TodoCardsService } from './shared/services/todo-cards.service';
 import { DataStorageService } from './shared/services/data-storage/data-storage.service';
 import { Component, Input, OnInit } from '@angular/core';
-import { Response } from '_debugger';
 import { TodoCardModel } from './todo-card/todo-card.model';
 
 import 'rxjs/Rx';
@@ -26,7 +25,7 @@ export class AppComponent implements OnInit {
 
         this.dataStorageService.getData();
 
-        this.todoCardService.todoCardsListChanged
+        this.todoCardService.todoCardsObservable
              .subscribe(
                  (todoCards? : TodoCardModel[]) => {
                      if (todoCards){
@@ -38,6 +37,6 @@ export class AppComponent implements OnInit {
                      
                  }
              )
-        this.todoCardService.todoCardsListChanged;
+        this.todoCardService.todoCardsObservable;
     }   
 }

@@ -14,16 +14,15 @@ import { Observable, Subject } from 'rxjs/Rx';
 
 @Injectable()
 export class TodoCardsService {
+    // OBSERVABLES
+    todoCardsObservable = new Subject<TodoCardModel[]>();
+    todoTaskObservable = new Subject <TodoTaskModel[]>();
 
-    todoCardsListChanged = new Subject<TodoCardModel[]>();
-
-    constructor( private mainCardService: MainCardService, 
-                 private todoTaskService   : TodoTaskService,
+    constructor( private todoTaskService   : TodoTaskService,
                  private http              : Http) { }
 
-    
 
-    private todoCards: TodoCardModel[] = [ ]   
+    private todoCards: TodoCardModel[] = []   
     getCardsArray(){
         return this.todoCards.slice();
     }
@@ -38,13 +37,13 @@ export class TodoCardsService {
 
         console.log('New Card created', newCard);
         this.todoCards.push( newCard );
-        this.todoCardsListChanged.next(this.todoCards.slice());
+        this.todoCardsObservable.next(this.todoCards.slice());
     }
     
     setTodoCards( cards: TodoCardModel[] ) {
         console.log("New todoCards array ", cards)
         this.todoCards = cards;
-        this.todoCardsListChanged.next( this.todoCards.slice()  );
+        this.todoCardsObservable.next( this.todoCards.slice()  );
     }
    
     getTodoCards(){
@@ -82,24 +81,7 @@ export class TodoCardsService {
 
 
 
-    // EDITS
-    addNewTask( cardID: number,  description: string, checked: boolean  ): void {
-       
-        for(let i = 0; i < this.todoCards.length; i++) {
-            if(this.todoCards[i]['id'] === cardID){
-                let id:number   = this.todoCards[i].taskArray.length;
-                let newTodoTask: TodoTaskModel = new TodoTaskModel(id, description, checked )
-                console.log ('New Todo Task Object', newTodoTask, this.todoCards);
-
-
-                this.todoCards[i].taskArray.unshift( newTodoTask );
-                // Adding new task to the Main Card (oldest tasks)
-                this.mainCardService.getTasks( newTodoTask );
-            }
-        }
-       
-    }
-
+// EDIT CARD
 
     onTitleChange(  id: number, newTitle: string ): void{
         this.todoCards[id].title = newTitle;
@@ -112,7 +94,7 @@ export class TodoCardsService {
                 this.destroyTodoCard(card[0]);
             }
         }
-        this.todoCardsListChanged.next(this.todoCards.slice());
+        this.todoCardsObservable.next(this.todoCards.slice());
         
     }
     destroyTodoCard( card: TodoCardModel ){
@@ -121,6 +103,45 @@ export class TodoCardsService {
         card.id = null;
         card.title = null;
         card = null;
+    }
+     
+    
+    // TASKS
+    addNewTask( cardID: number,  description: string, checked: boolean  ): void {
+       
+        for(let i = 0; i < this.todoCards.length; i++) {
+            if(this.todoCards[i]['id'] === cardID){
+                let id:number   = this.todoCards[i].taskArray.length;
+                let newTodoTask: TodoTaskModel = new TodoTaskModel(id, description, checked )
+                console.log ('New Todo Task Object', newTodoTask, this.todoCards);
+
+                
+                this.todoCards[i].taskArray.unshift( newTodoTask );
+                this.getTodoTasks()
+                // Adding new task to the Main Card (oldest tasks)
+                // this.mainCardService.getTasks( newTodoTask );
+            }
+        }
+       
+    }
+    getInitialTasks(): TodoTaskModel[] {
+        let taskArray: TodoTaskModel[] = [];
+        for( let card of this.getTodoCards() ){
+            for( let task of card.taskArray ){
+                taskArray.push( task );
+            }
+        }
+        return taskArray;
+    }
+    getTodoTasks(){
+        let taskArray: TodoTaskModel[] = [];
+        for( let card of this.getTodoCards() ){
+            for( let task of card.taskArray ){
+                taskArray.push( task );
+            }
+        }
+        return this.todoTaskObservable.next( taskArray );
+        
     }
 
 }

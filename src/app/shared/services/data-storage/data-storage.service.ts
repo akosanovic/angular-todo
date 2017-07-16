@@ -14,8 +14,15 @@ export class DataStorageService implements OnInit{
     ngOnInit(){}
 
     storeData(){
-        return this.http.put('https://todo-app-13093.firebaseio.com/data.json', 
-                        this.todoCardsService.getTodoCards() )
+        this.http.put('https://todo-app-13093.firebaseio.com/data.json', this.todoCardsService.getTodoCards() )
+            .subscribe(
+                (response: Response) => {
+                     console.log('Data Stored to Firebase', response);
+                },
+                (error) => {
+                    console.log( "Error occured", error );
+                }
+            )
     }
     getData(){
         return this.http.get('https://todo-app-13093.firebaseio.com/data.json')
