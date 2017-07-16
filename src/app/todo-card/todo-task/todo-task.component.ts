@@ -19,9 +19,11 @@ export class TodoTaskComponent implements OnInit {
     @Input('todoTask') task: TodoTaskModel;
     
     taskChecked:boolean = false;
-
+    
     randomTaskNumber: number = this.genarateRandomNumber();
+    // Property Binding
     showTaskDrpodownMenu: boolean = false;
+    taskDescriptionDisabled = true;
 
 
     constructor( private todoTaskService: TodoTaskService) {}
@@ -53,10 +55,18 @@ export class TodoTaskComponent implements OnInit {
     closeDropdownMenu(){
         this.showTaskDrpodownMenu = false;
     }
+
+    // Input Task Description
     editTaskDescription(e){
         e.preventDefault();
+        this.taskDescriptionDisabled = !this.taskDescriptionDisabled;
+        
+    }
+    disableTaskDescription(){
+        this.taskDescriptionDisabled = true;
     }
     deleteTask(e) {
         e.preventDefault();
+        
     }
 }

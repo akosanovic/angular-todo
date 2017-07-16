@@ -1,0 +1,11 @@
+PROJECT PLAN
+1. Connect Todo tasks to the main card ( listen for the checked, deleted, new task added, ) and store it to the 
+2. Manage MainCard - no oldest task problem
+3. Create directive for input fields focus (Todo Task Description, TodoCard Header Title)
+4. Create "oneneter" directive
+5. on trigger event - save all to the database POST
+
+
+Optional 
+- if there is time
+1. Give option of changing TodoCard header color
