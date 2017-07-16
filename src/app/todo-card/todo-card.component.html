@@ -27,10 +27,10 @@
 
             <!-- #2 -->
             <!-- On Click display Drop Down Menu :: BEGIN  -->
-            <a href="#" 
-               class="cardMenuButton"
+            <a class="cardMenuButton"
                (click)='toggleCardMenu()'
-               (clickOutside)='hideCardMenu()'>
+               (clickOutside)='hideCardMenu()'
+               cursor-pointer-d>
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>
             <div class="todoCardDropDownMenu"
@@ -39,16 +39,16 @@
                 <div class="dropDownMenuContainer">
                     <ul class="dropdownMenuList">
                         <li class="dropdownMenuItem">
-                            <a href="#" 
-                               class="dropdownMenuLink"
-                               (click)='editCardHeader($event)'>
+                            <a class="dropdownMenuLink"
+                               (click)='editCardHeader($event)'
+                               cursor-pointer-d>
                                 Edit Card
                             </a>
                         </li>
                         <li class="dropdownMenuItem">
-                            <a href="#" 
-                               class="dropdownMenuLink"
-                               (click)='deleteTodoCard($event)'>
+                            <a class="dropdownMenuLink"
+                               (click)='deleteTodoCard($event)'
+                               cursor-pointer-d>
                                 Delete Card
                             </a>
                         </li>
@@ -65,9 +65,9 @@
             <!-- #3 Add Task Button-->
             <div class="todoCardAddNewTaskButtonSmall">
                
-                <a href    = "#"
-                   class   = "todoCardAddNewTaskButton"
-                   (click) = 'showNewTaskInput()'>
+                <a class   = "todoCardAddNewTaskButton"
+                   (click) = 'showNewTaskInput()'
+                   cursor-pointer-d>
                     
                     <img class="addNewButtonImageSmall" 
                         src="../../assets/images/add-button-small.svg">

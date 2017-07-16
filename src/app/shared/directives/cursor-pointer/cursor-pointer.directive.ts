@@ -1,10 +1,18 @@
-import { Directive } from '@angular/core';
+import { Directive, OnInit, ElementRef, HostListener, Renderer2 } from '@angular/core';
 
 @Directive({
-  selector: '[appCursorPointer]'
+    selector: '[cursor-pointer-d]'
 })
-export class CursorPointerDirective {
+export class CursorPointerDirective implements OnInit {
+  element;
 
-  constructor() { }
+  constructor( private elRefer: ElementRef, 
+               private renderer: Renderer2 ) { }
+  ngOnInit(){
+    this.element = this.elRefer.nativeElement;
+  }
+  @HostListener('mouseenter') mouseover ( e? : Event ) {
+      this.renderer.setStyle(this.element, 'cursor', 'pointer');
+  }
 
 }

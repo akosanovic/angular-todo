@@ -53,4 +53,10 @@ export class TodoTaskComponent implements OnInit {
     closeDropdownMenu(){
         this.showTaskDrpodownMenu = false;
     }
+    editTaskDescription(e){
+        e.preventDefault();
+    }
+    deleteTask(e) {
+        e.preventDefault();
+    }
 }

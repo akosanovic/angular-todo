@@ -7,6 +7,9 @@
 	&.taskChecked {
 		background-color: #f6f9ff;
 	}
+	.taskItemContent {
+		position: relative;
+	}
 }
 
 //  Input Group is consist of:
@@ -79,8 +82,8 @@
 .todoTaskDropdownMenu {
 	@include transition(height 0.5s ease, overflow 0.7s ease-in-out );		
 	position: absolute;
-	top  : $lh*2;
-	right: $lh;
+	top  : $lh;
+	right: $lh/2;
 	display: block;
 
 	height: 0;

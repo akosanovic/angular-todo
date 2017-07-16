@@ -3,64 +3,63 @@
     [attr.data-task-id] = "task.id"
     [ngClass] = "{'taskChecked': taskChecked }">
     
-    <div class="inputGroup">
-        <!--Custom Checkbox Group :: BEGIN-->
-        <div class="absolutePositionedPrefix">
-            <div class="customCheckbox">
-                <input type      = "checkbox"
-                       name      = "task status"
-                       class     = "task--done--status"
-                       id        = "todo--card--task--status-{{randomTaskNumber}}"
-                       [checked] = "task.checked">
-                <!--Random Task Number required for the custom checkbox-->
-                <label for="todo--card--task--status-{{randomTaskNumber}}"
-                       (click)='todoTaskStatusChanged()'>
-                </label>
-            </div>          
-        </div>	
-        <!--Custom Checkbox Group :: BEGIN-->										
-        <input class    = "inputGroupDescription"
-               type     = "text"
-               name     = "todo card description"
-               readonly = "readonly"
-               value    = "{{task.description}}">
-       
-     
-     
-       <!--DropDown Menu Button :: BEGIN -->
-        <a  href="#" 
-            class="taskMenuButton"
-            (click)='toggleTaskDropdownMenu()'
-            (clickOutside)='closeDropdownMenu()'>
-            <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-        </a>
-       <!--DropDown Menu Button :: END -->        
-    </div>
-    <!--Dropdown Menu :: BEGIN  -->
-    <div 
-        class="todoTaskDropdownMenu"
-        [ngClass] = "{'showTodoTaskDropdownMenu': showTaskDrpodownMenu}">
-        <div class="dropDownMenuContainer">
-            <ul class="dropdownMenuList">
-                <li class="dropdownMenuItem">
-                    <a href="#" 
-                        class="dropdownMenuLink"
-                        (click)='editTaskDescription($event)'>
-                        Edit Task
-                    </a>
-                </li>
-                <li class="dropdownMenuItem">
-                    <a href="#" 
-                        class="dropdownMenuLink"
-                        (click)='deleteTodoCard($event)'>
-                        Delete Task
-                    </a>
-                </li>
-            </ul>
-        </div>	
+    <div class="taskItemContent">
+        <div class="inputGroup">
+            <!--Custom Checkbox Group :: BEGIN-->
+            <div class="absolutePositionedPrefix">
+                <div class="customCheckbox">
+                    <input type      = "checkbox"
+                        name      = "task status"
+                        class     = "task--done--status"
+                        id        = "todo--card--task--status-{{randomTaskNumber}}"
+                        [checked] = "task.checked">
+                    <!--Random Task Number required for the custom checkbox-->
+                    <label for="todo--card--task--status-{{randomTaskNumber}}"
+                        (click)='todoTaskStatusChanged()'>
+                    </label>
+                </div>          
+            </div>	
+            <!--Custom Checkbox Group :: BEGIN-->										
+            <input class    = "inputGroupDescription"
+                type     = "text"
+                name     = "todo card description"
+                readonly = "readonly"
+                value    = "{{task.description}}">
+        
+        
+        
+        <!--DropDown Menu Button :: BEGIN -->
+            <a class          = "taskMenuButton"
+               (click)        = 'toggleTaskDropdownMenu()'
+               (clickOutside) = 'closeDropdownMenu()'
+                cursor-pointer-d>
+                <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+            </a>
+        <!--DropDown Menu Button :: END -->        
+        </div>
+        <!--Dropdown Menu :: BEGIN  -->
+        <div class="todoTaskDropdownMenu"
+            [ngClass] = "{'showTodoTaskDropdownMenu': showTaskDrpodownMenu}">
+            <div class="dropDownMenuContainer">
+                <ul class="dropdownMenuList">
+                    <li class="dropdownMenuItem">
+                        <a class   = "dropdownMenuLink"
+                           (click) = 'editTaskDescription($event)'
+                            cursor-pointer-d>
+                            Edit Task
+                        </a>
+                    </li>
+                    <li class="dropdownMenuItem">
+                        <a  class = "dropdownMenuLink"
+                            (click) = 'deleteTask($event)'
+                            cursor-pointer-d>
+                            Delete Task
+                        </a>
+                    </li>
+                </ul>
+            </div>	
 
-    </div><!-- On Click display Drop Down Menu :: END  -->
+        </div> <!--Dropdown Menu :: END  -->
+    </div>
     
-    <!--Dropdown Menu :: END  -->
-    
-  </li>
+</li>
