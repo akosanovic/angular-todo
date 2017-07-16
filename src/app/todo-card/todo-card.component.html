@@ -14,13 +14,13 @@
                         <i class = "fa fa-file-text-o" aria-hidden="true"></i>
                     </div>
                 </div>											
-                <input type       = "text"
-                       class      = "inputGroupDescription"
-                       name       = "todo card description"
-                       [readonly] = "disableCardTitle"
-                       (blur)     = 'changeCardTitle()'
-
-                       value      = "{{card.title}}"
+                <input type          = "text"
+                       class         = "inputGroupDescription"
+                       name          = "todo card description"
+                       [readonly]    = "disableCardTitle"
+                       (blur)        = 'changeCardTitle()'
+                       (keyup.enter) = 'changeCardTitle()'
+                       value         = "{{card.title}}"
                        #cardTitle>
             </div>
 
@@ -87,9 +87,8 @@
                             title="New Todo Description"
                             value=""
                             placeholder="New Todo Description"
-                            
                             #inputTaskDetails
-                            (keypress) = 'newTaskAdded($event)'
+                            (keyup.enter) = 'newTaskAdded($event)'
                             (blur) = "newTaskInputBlured($event)"> 
                     </div>
                 </li>

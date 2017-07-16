@@ -21,19 +21,18 @@ import {  Component, EventEmitter, NgModule, OnInit,  Output, ViewChild, ViewEnc
 
 export class MainCardComponent implements OnInit {
 
-    oldestTaskArray: TodoTaskModel [] = [];
+    oldestTaskArray: TodoTaskModel[] = [];
     floatingButtonsHidden = true;
    
     // Outputing events
     @Output() newCardCreated = new EventEmitter<any>();
     
    noOldTasks: boolean = false;
-
-
-
-
-
-    constructor( private mainCardService: MainCardService,
+   
+   
+   
+   
+   constructor(  private mainCardService: MainCardService,
                  private dataStorageService: DataStorageService,
                  private todoCardsService  : TodoCardsService ) {}
     

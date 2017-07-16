@@ -115,7 +115,7 @@ export class TodoCardComponent implements OnInit {
         let taskDescription: string;
 
         /*if clicked on enter (replace this with custom directive)*/
-        if(e.which === 13 && e.target.value ) {
+        if(e.target.value ) {
             // Add new Todo Task Object to the Array
             taskDescription = this.inputTaskDetails.nativeElement.value;
            

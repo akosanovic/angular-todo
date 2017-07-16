@@ -1,23 +1,20 @@
-
-
 import { TodoTaskModel } from './../todo-task.model';
-
 import { Injectable, OnInit } from '@angular/core';
 
 @Injectable()
 export class MainCardService implements OnInit{
 
     taskArray: TodoTaskModel[] = [
-        new TodoTaskModel(1, "Testing Task", false),
+        // new TodoTaskModel(1, "Testing Task", false),
     ]
 
-    oldestTaskArray: TodoTaskModel [] = this.taskArray;
+    oldestTaskArray: TodoTaskModel [] = [];
 
     constructor() { }
 
     ngOnInit (){
-       
-     }
+        this.oldestTaskArray = this.taskArray;
+    }
 
     getTasks( todoTasks: TodoTaskModel ){        
         this.taskArray.push(todoTasks);

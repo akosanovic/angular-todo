@@ -7,7 +7,7 @@ import { TodoTaskService } from './todo-task.service';
 import { TodoCardModel } from './../../todo-card/todo-card.model';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { Subject } from 'rxjs/Rx';
+import { Observable, Subject } from 'rxjs/Rx';
 
 
 
