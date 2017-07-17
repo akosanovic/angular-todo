@@ -23,15 +23,16 @@ export class TodoCardsService {
 
 
     private todoCards: TodoCardModel[] = []   
+
     getCardsArray(){
         return this.todoCards.slice();
     }
 
     addTodoCard():void {
-        let id: number          = this.getCardID();
-        let headerColor: string = this.getCardHeaderColor();
-        let title: string       = this.getCardTitle( );
-        let tasks: TodoTaskModel[]   = this.getTasks();
+        let id: number             = this.getCardID();
+        let headerColor: string    = this.getCardHeaderColor();
+        let title: string          = this.getCardTitle( );
+        let tasks: TodoTaskModel[] = this.getTasks();
         const newCard = new TodoCardModel(id, headerColor, title, tasks)
 
 
@@ -142,6 +143,18 @@ export class TodoCardsService {
         }
         return this.todoTaskObservable.next( taskArray );
         
+    }
+    deleteTodoTask( todoTask: TodoTaskModel ) {
+        let todoCards = this.getTodoCards();
+        for (let card of todoCards){
+            for( let i = 0; i < card.taskArray.length; i++  ){
+                if ( todoTask == card.taskArray[i]){
+                    card.taskArray.splice(i, 1);
+                    this.setTodoCards(todoCards);
+                    this.todoCardsObservable.next(this.todoCards.slice());
+                }
+            }
+        }
     }
 
 }

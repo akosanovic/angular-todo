@@ -1,11 +1,15 @@
+import { DataStorageService } from './../../shared/services/data-storage/data-storage.service';
+import { TodoCardsService } from './../../shared/services/todo-cards.service';
 import { TodoTaskService } from './../../shared/services/todo-task.service';
 import { TodoTaskModel } from './../../shared/todo-task.model';
 
-import { TaskScheduler } from 'protractor/built/taskScheduler';
-import { Component, 
+import "rxjs/Rx";
+import {Component, 
         Input,
         OnInit, 
         ViewEncapsulation } from '@angular/core';
+
+
 
 
 @Component({
@@ -26,7 +30,9 @@ export class TodoTaskComponent implements OnInit {
     taskDescriptionDisabled = true;
 
 
-    constructor( private todoTaskService: TodoTaskService) {}
+    constructor( private todoTaskService: TodoTaskService,
+                 private todoCardService: TodoCardsService,
+                 private dataStorageService: DataStorageService) {}
     
 
     ngOnInit() {
@@ -58,7 +64,7 @@ export class TodoTaskComponent implements OnInit {
 
     // Input Task Description
     editTaskDescription(e){
-        e.preventDefault();
+         e.stopPropagation();
         this.taskDescriptionDisabled = !this.taskDescriptionDisabled;
         
     }
@@ -66,7 +72,10 @@ export class TodoTaskComponent implements OnInit {
         this.taskDescriptionDisabled = true;
     }
     deleteTask(e) {
-        e.preventDefault();
+         e.stopPropagation();
         
+        console.log(`Delete todo Task `, this.task);
+        this.todoCardService.deleteTodoTask(this.task);
+        this.dataStorageService.storeData()                
     }
 }
