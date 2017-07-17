@@ -144,6 +144,17 @@ export class TodoCardsService {
         return this.todoTaskObservable.next( taskArray );
         
     }
+    editTodoTask( todoTask: TodoTaskModel, newDescription: string ){
+        console.log("EDIT TASK: todoTask: ", todoTask, "Value: ", newDescription)
+        let todoCards = this.getTodoCards();
+        for (let card of todoCards){
+            for(let i = 0; i < card.taskArray.length;  i++){
+                if( card.taskArray[i] === todoTask ){
+                    card.taskArray[i].description = newDescription;
+                }
+            }
+        }
+    }
     deleteTodoTask( todoTask: TodoTaskModel ) {
         let todoCards = this.getTodoCards();
         for (let card of todoCards){

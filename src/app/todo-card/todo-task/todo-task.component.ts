@@ -3,11 +3,8 @@ import { TodoCardsService } from './../../shared/services/todo-cards.service';
 import { TodoTaskService } from './../../shared/services/todo-task.service';
 import { TodoTaskModel } from './../../shared/todo-task.model';
 
-import "rxjs/Rx";
-import {Component, 
-        Input,
-        OnInit, 
-        ViewEncapsulation } from '@angular/core';
+import 'rxjs/Rx';
+import { Component, ElementRef, Input, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 
 
 
@@ -22,12 +19,16 @@ export class TodoTaskComponent implements OnInit {
   
     @Input('todoTask') task: TodoTaskModel;
     
-    taskChecked:boolean = false;
-    
+    // TodoTask Description Input
+    @ViewChild('todoTaskInput') taskDescriptionInput: ElementRef
+
+    taskChecked:boolean = false;    
     randomTaskNumber: number = this.genarateRandomNumber();
     // Property Binding
     showTaskDrpodownMenu: boolean = false;
     taskDescriptionDisabled = true;
+
+
 
 
     constructor( private todoTaskService: TodoTaskService,
@@ -39,6 +40,8 @@ export class TodoTaskComponent implements OnInit {
        this.taskChecked = this.task.checked;
        console.log("Task Checked", this.taskChecked)
     }
+
+
 
 
     // required for the custom checkbox
@@ -63,13 +66,20 @@ export class TodoTaskComponent implements OnInit {
     }
 
     // Input Task Description
-    editTaskDescription(e){
-         e.stopPropagation();
-        this.taskDescriptionDisabled = !this.taskDescriptionDisabled;
-        
+    enableTaskDescriptionChange(e){
+        e.stopPropagation();
+        this.taskDescriptionDisabled = false;
+        this.taskDescriptionInput.nativeElement.focus();
+        this.closeDropdownMenu();
     }
     disableTaskDescription(){
         this.taskDescriptionDisabled = true;
+    }
+    onTaskDescriptionChange(){
+        let description = this.taskDescriptionInput.nativeElement.value;
+        this.todoCardService.editTodoTask( this.task, description  )
+        this.disableTaskDescription();
+        this.dataStorageService.storeData();
     }
     deleteTask(e) {
          e.stopPropagation();

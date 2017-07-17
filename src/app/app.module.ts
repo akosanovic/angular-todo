@@ -20,7 +20,6 @@ import { TodoCardComponent } from './todo-card/todo-card.component';
 import { ClickOutsideDirective } from './../../node_modules/angular2-click-outside/clickOutside.directive';
 
 // Animation
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FocusDirective } from './shared/directives/focus-input/focus.directive';
 
 
@@ -43,7 +42,7 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
     HttpModule,
     FormsModule,
 
-    BrowserAnimationsModule
+    
   ],
   // Making one instance of the service for the whole application
 

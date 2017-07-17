@@ -1,4 +1,3 @@
-import { setTimeout } from 'timers';
 import { TodoTaskModel } from './../shared/todo-task.model';
 import { MainCardService } from './../shared/services/main-card.service';
 import { TodoCardsService } from './../shared/services/todo-cards.service';

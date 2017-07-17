@@ -8,7 +8,7 @@
             <!--Custom Checkbox Group :: BEGIN-->
             <div class="absolutePositionedPrefix">
                 <div class="customCheckbox">
-                    <input type      = "checkbox"
+                    <input type   = "checkbox"
                         name      = "task status"
                         class     = "task--done--status"
                         id        = "todo--card--task--status-{{randomTaskNumber}}"
@@ -25,7 +25,9 @@
                    name       = "todo card description"
                    [readonly] = "taskDescriptionDisabled"
                    (blur)     = "disableTaskDescription()"
-                   value      = "{{task.description}}">
+                   (keyup.enter)= "onTaskDescriptionChange()"
+                   value      = "{{task.description}}"
+                   #todoTaskInput>
         
         
         
@@ -45,7 +47,7 @@
                 <ul class="dropdownMenuList">
                     <li class="dropdownMenuItem">
                         <a class   = "dropdownMenuLink"
-                           (click) = 'editTaskDescription($event)'
+                           (click) = 'enableTaskDescriptionChange($event)'
                             cursor-pointer-d>
                             Edit Task
                         </a>
