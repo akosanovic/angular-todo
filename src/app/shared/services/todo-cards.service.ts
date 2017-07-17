@@ -41,10 +41,11 @@ export class TodoCardsService {
         this.todoCardsObservable.next(this.todoCards.slice());
     }
     
-    setTodoCards( cards: TodoCardModel[] ) {
-        console.log("New todoCards array ", cards)
-        this.todoCards = cards;
-        this.todoCardsObservable.next( this.todoCards.slice()  );
+    setTodoCards( cards?: TodoCardModel[] ) {
+        if(cards.length > 0){
+            this.todoCards = cards;
+            this.todoCardsObservable.next( this.todoCards.slice()  );
+        }
     }
    
     getTodoCards(){
@@ -92,10 +93,9 @@ export class TodoCardsService {
         for(let i = 0; i < this.todoCards.length; i++){
             if( this.todoCards[i]['id'] === deletedCardID ){
                 let card = this.todoCards.splice(i, 1);
-                this.destroyTodoCard(card[0]);
+                this.destroyTodoCard(card[0]);                
             }
         }
-        this.todoCardsObservable.next(this.todoCards.slice());
         
     }
     destroyTodoCard( card: TodoCardModel ){
@@ -125,16 +125,8 @@ export class TodoCardsService {
         }
        
     }
-    getInitialTasks(): TodoTaskModel[] {
-        let taskArray: TodoTaskModel[] = [];
-        for( let card of this.getTodoCards() ){
-            for( let task of card.taskArray ){
-                taskArray.push( task );
-            }
-        }
-        return taskArray;
-    }
-    getTodoTasks(){
+  
+    getTodoTasks() {
         let taskArray: TodoTaskModel[] = [];
         for( let card of this.getTodoCards() ){
             for( let task of card.taskArray ){
@@ -161,8 +153,9 @@ export class TodoCardsService {
             for( let i = 0; i < card.taskArray.length; i++  ){
                 if ( todoTask == card.taskArray[i]){
                     card.taskArray.splice(i, 1);
+                    
                     this.setTodoCards(todoCards);
-                    this.todoCardsObservable.next(this.todoCards.slice());
+                    this.getTodoTasks();
                 }
             }
         }

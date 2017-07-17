@@ -155,3 +155,18 @@ body {
 	$br-w-ms: 666px;
 // Small Devices: 444px
 	$br-w-s: 444px;
+
+
+// // CLEARFIX
+// .clearfix:after {
+//    content: " "; /* Older browser do not support empty content */
+//    visibility: hidden;
+//    display: block;
+//    height: 0;
+//    clear: both;
+// }
+// .clearfix:after {
+//   content: "";
+//   display: table;
+//   clear: both;
+// }

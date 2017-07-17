@@ -4,7 +4,7 @@ import { TodoTaskModel } from './../todo-task.model';
 
 export class TodoTaskService {
 
-    constructor() { }
+    constructor() {}
 
 
     taskArray: TodoTaskModel[] = []

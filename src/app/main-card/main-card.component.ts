@@ -23,11 +23,11 @@ export class MainCardComponent implements OnInit {
 
     oldestTaskArray = [];
     floatingButtonsHidden = true;
-   
+    noOldTasks: boolean = true;
     // Outputing events
     @Output() newCardCreated = new EventEmitter<any>();
     
-   noOldTasks: boolean = false;
+  
    
    
    
@@ -37,8 +37,6 @@ export class MainCardComponent implements OnInit {
                  private todoCardsService  : TodoCardsService ) {}
     
     ngOnInit() {
-        
-        this.noOldTasks      = false;
         this.todoCardsService.getTodoTasks();
         // TodoTask Observable
         this.todoCardsService.todoTaskObservable
@@ -46,8 +44,14 @@ export class MainCardComponent implements OnInit {
                 (todoTask: TodoTaskModel[]) => {
                     console.log('new todoTask', todoTask)
                     this.oldestTaskArray = todoTask;
+                    this.checkIfOldTasks();
                 }
             )
+
+
+            
+        this.checkIfOldTasks();
+        console.log("No old tasks", this.noOldTasks)
         // setTimeout(
         //     () => {
         //         this.oldestTaskArray = this.todoCardsService.getTodoTasks();
@@ -56,7 +60,15 @@ export class MainCardComponent implements OnInit {
         // )
     }
     
-    
+    checkIfOldTasks(){
+        if(this.oldestTaskArray.length <= 0){
+            this.noOldTasks = true;
+        }
+        else{
+            this.noOldTasks = false;
+            console.log('Oldest task array then', this.oldestTaskArray.length)
+        }
+    }
 
     
     toggleFloatingButtons(e) {
