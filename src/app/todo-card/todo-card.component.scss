@@ -25,7 +25,7 @@
 	position: relative;
 	padding: $lh $lh/2;
 	color  : $white;	
-	@include transition(all 0.5s linear);
+	@include transition(transform(all 0.5s linear));
 
 	&.yellowCardHeader {
 		background-color: $yellow;

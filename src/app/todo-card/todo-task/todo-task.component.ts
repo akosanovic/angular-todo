@@ -54,7 +54,9 @@ export class TodoTaskComponent implements OnInit {
         console.log('Task Status Changed');
         this.taskChecked = !this.taskChecked;
 
-        this.todoTaskService.onTaskStatusChange( this.task['id'], this.taskChecked );
+        this.todoCardService.statusChangeTodoTask(this.task, this.taskChecked);
+        this.dataStorageService.storeData();
+
     }
 
     // Dropdown Menu
@@ -77,9 +79,14 @@ export class TodoTaskComponent implements OnInit {
     }
     onTaskDescriptionChange(){
         let description = this.taskDescriptionInput.nativeElement.value;
-        this.todoCardService.editTodoTask( this.task, description  )
-        this.disableTaskDescription();
-        this.dataStorageService.storeData();
+        if(description){
+            this.todoCardService.editTodoTask( this.task, description  )
+            this.disableTaskDescription();
+            this.dataStorageService.storeData();
+        }
+        else{
+            this.taskDescriptionInput.nativeElement.value = this.task.description;
+        }
     }
     deleteTask(e) {
          e.stopPropagation();
