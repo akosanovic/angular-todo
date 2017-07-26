@@ -5,7 +5,7 @@ import 'rxjs/Rx';
 
 
 @Injectable()
-export class MainCardService implements OnInit{
+export class MainCardService {
 
     taskArray: TodoTaskModel[] = [
         new TodoTaskModel(1, "Testing Task", false),
@@ -17,19 +17,8 @@ export class MainCardService implements OnInit{
 
     constructor( private todoCardsService: TodoCardsService ) { }
 
-    ngOnInit(){
-        console.log('Do you even work, is there ngOnInit in services ')
-        this.oldestTaskArray = this.taskArray; 
-         let todoCards = this.todoCardsService.getTodoCards();
-        console.log('Main Card Service cards,  ', todoCards)
-        for( let card of todoCards ){
-            for( let task of card.taskArray ){
-                this.taskArray.push(task)
-            }
-        }
-        console.log('Task Array: ', this.taskArray)
-        return this.taskArray;       
-    }
+
+  
 
     getTasks()  {  
         // let todoCards = this.todoCardsService.getTodoCards();

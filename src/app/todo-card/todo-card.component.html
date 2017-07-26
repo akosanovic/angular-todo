@@ -30,25 +30,24 @@
             <a class="cardMenuButton"
                (click)='toggleCardMenu()'
                (clickOutside)='hideCardMenu()'
-               cursor-pointer-d>
+               cursor-pointer-directive>
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>
             <div class="todoCardDropDownMenu"
-                 [ngClass] = "{'showTodoCardDropDownMenu': showCardDrpodownMenu}"
-                 >
+                 [ngClass] = "{'showTodoCardDropDownMenu': showCardDrpodownMenu}">
                 <div class="dropDownMenuContainer">
                     <ul class="dropdownMenuList">
                         <li class="dropdownMenuItem">
                             <a class="dropdownMenuLink"
                                (click)='editCardHeader($event)'
-                               cursor-pointer-d>
+                               cursor-pointer-directive>
                                 Edit Card
                             </a>
                         </li>
                         <li class="dropdownMenuItem">
                             <a class="dropdownMenuLink"
                                (click)='deleteTodoCard($event)'
-                               cursor-pointer-d>
+                               cursor-pointer-directive>
                                 Delete Card
                             </a>
                         </li>
@@ -67,7 +66,7 @@
                
                 <a class   = "todoCardAddNewTaskButton"
                    (click) = 'showNewTaskInput()'
-                   cursor-pointer-d>
+                   cursor-pointer-directive>
                     
                     <img class="addNewButtonImageSmall" 
                         src="../../assets/images/add-button-small.svg">
@@ -102,7 +101,7 @@
                 
                 <!--Child Component of the TodoCard Component  -->
                 <app-todo-task 
-                    *ngFor = "let task of card['taskArray']"
+                    *ngFor = "let task of card.taskArray"
                     [todoTask] = 'task'>
                 </app-todo-task>
                 

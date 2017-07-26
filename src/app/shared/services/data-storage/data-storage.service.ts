@@ -8,10 +8,15 @@ import { error } from 'util';
 import 'rxjs/Rx';
 
 @Injectable()
+
+
 export class DataStorageService implements OnInit{
 
-    constructor( private http: Http, private todoCardsService: TodoCardsService) { }
+    constructor( private http: Http, 
+                 private todoCardsService: TodoCardsService) { }
     ngOnInit(){}
+
+
 
     storeData(){
         this.http.put('https://todo-app-13093.firebaseio.com/data.json', this.todoCardsService.getTodoCards() )
@@ -24,6 +29,9 @@ export class DataStorageService implements OnInit{
                 }
             )
     }
+
+
+
     getData(){
         return this.http.get('https://todo-app-13093.firebaseio.com/data.json')
             // If there is no taskArray in card add taskArray field
@@ -52,6 +60,7 @@ export class DataStorageService implements OnInit{
                     // assinging the recived, extracted JS object to the TodoCardService 
                     this.todoCardsService.setTodoCards(todoCards);
                 }
+                
             )
     }
 

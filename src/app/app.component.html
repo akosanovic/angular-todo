@@ -1,13 +1,10 @@
-
-<div class="pageContainer"  >
+<div class="pageContainer">
     <div class="pageContent">
         <div class="row clearfix">
 
             <!--Main Card Column-->
-            <div class="col-sm-1 col-ms-6 col-md-4 col-lg-3 mediumWidthAbsoluteColumn
-                mediumWidthAbsoluteColumnLeft">
-                <app-main-card>
-                </app-main-card>
+            <div class="col-sm-1 col-ms-6 col-md-4 col-lg-3 mediumWidthAbsoluteColumn mediumWidthAbsoluteColumnLeft">
+                <app-main-card></app-main-card>
             </div>
 
             <!--Todo Cards Group-->        
@@ -17,14 +14,12 @@
                    
                     <div *ngFor = 'let card of todoCardArray'>
                         
-                        <app-todo-card 
-                            *ngIf = "card"
-                            [todoCard] = 'card'>
+                        <app-todo-card *ngIf = "card"
+                                        [todoCard] = 'card'>
                         </app-todo-card>
-                        
-
                     </div>
 
+                    
                     <!--ng-template is element that isn't rendered by default-->
                     <div *ngIf = 'todoCardArray.length === 0'>
                         No card to display

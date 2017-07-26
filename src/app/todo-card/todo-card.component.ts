@@ -70,6 +70,8 @@ export class TodoCardComponent implements OnInit {
     hideCardMenu() {
         this.showCardDrpodownMenu = false;
     }
+
+
     // Card Menu Options :: BEGIN
     editCardHeader(e):void {
         e.stopPropagation();
@@ -78,6 +80,8 @@ export class TodoCardComponent implements OnInit {
         this.cardTitleRef.nativeElement.focus();
         this.hideCardMenu();
     }
+
+
     changeCardTitle(){
         let inputTitle:string = this.cardTitleRef.nativeElement.value
         let id: number = this.card.id;
@@ -88,11 +92,10 @@ export class TodoCardComponent implements OnInit {
            this.cardTitleRef.nativeElement.value = this.card.title;
        }
        this.disableCardTitle = true;
-        this.dataStorageService.storeData();
-       
+        this.dataStorageService.storeData();  
     }
 
-
+    
     deleteTodoCard(e) {
         e.stopPropagation();
 
@@ -106,7 +109,6 @@ export class TodoCardComponent implements OnInit {
        if(this.showTaskInput === false){
             this.showTaskInput = true;
             this.inputTaskDetails.nativeElement.focus();
-
        }
     }
 

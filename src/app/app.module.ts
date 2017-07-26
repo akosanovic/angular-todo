@@ -37,13 +37,14 @@ import { FocusDirective } from './shared/directives/focus-input/focus.directive'
     ClickOutsideDirective,
     CursorPointerDirective
   ],
+  // Dynamic component 
+  entryComponents: [ TodoTaskComponent ],
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule,
-
-    
+    FormsModule,   
   ],
+  
   // Making one instance of the service for the whole application
 
   providers: [TodoCardsService, DataStorageService, TodoTaskService, MainCardService],

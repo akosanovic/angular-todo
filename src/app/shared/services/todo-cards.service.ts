@@ -28,10 +28,11 @@ export class TodoCardsService {
         return this.todoCards.slice();
     }
 
-    addTodoCard():void {
-        let id: number             = this.getCardID();
-        let headerColor: string    = this.getCardHeaderColor();
-        let title: string          = this.getCardTitle( );
+
+    addTodoCard( cardID:number ):void {
+        let id: number             = cardID;
+        let headerColor: string    = this.getCardHeaderColor(cardID);
+        let title: string          = this.getCardTitle();
         let tasks: TodoTaskModel[] = this.getTasks();
         const newCard = new TodoCardModel(id, headerColor, title, tasks)
 
@@ -40,6 +41,7 @@ export class TodoCardsService {
         this.todoCards.push( newCard );
         this.todoCardsObservable.next(this.todoCards.slice());
     }
+
     
     setTodoCards( cards?: TodoCardModel[] ) {
         if(cards.length > 0){
@@ -56,24 +58,26 @@ export class TodoCardsService {
 
   
 
-    getCardID():number{
-        return this.todoCards.length;
-    }
-    getCardHeaderColor():string {
+    
+    getCardHeaderColor(id: number):string {
         const colorArray: [string] = [  "yellow", "turquoise", "purple", "blue", "orange" ];
         
         let colorArrayLenth:number = colorArray.length;
-        let cardsArrayLenth:number = this.todoCards.length;
-        if (cardsArrayLenth >= cardsArrayLenth){
-            cardsArrayLenth = cardsArrayLenth % colorArrayLenth;
+       
+        if ( id >= colorArrayLenth){
+            id = id % colorArrayLenth;
         }
-        let colorArrayHeader = colorArray[cardsArrayLenth]+'CardHeader'
+        let colorArrayHeader = colorArray[id]+'CardHeader'
         return colorArrayHeader;
     }
+
+
     getCardTitle( cardTitle?:string ): string{
         let title: string = cardTitle ? cardTitle : 'Edit Card Title';
         return title;
     }
+
+    
     getTasks(taskArray?: TodoTaskModel[] ): TodoTaskModel[]{
         let tasks: TodoTaskModel[] = taskArray ? taskArray : [];
         return tasks;
@@ -84,20 +88,23 @@ export class TodoCardsService {
 
 
 // EDIT CARD
-
-    onTitleChange(  id: number, newTitle: string ): void{
+    onTitleChange (id: number, newTitle: string ): void{
         this.todoCards[id].title = newTitle;
         console.log('new title is ', newTitle);
     }
+
+
     onCardDelete( deletedCardID:number ){
         for(let i = 0; i < this.todoCards.length; i++){
             if( this.todoCards[i]['id'] === deletedCardID ){
                 let card = this.todoCards.splice(i, 1);
-                this.destroyTodoCard(card[0]);                
+                this.destroyTodoCard(card[0]);   
+                this.setTodoCards(this.todoCards)             
             }
         }
-        
     }
+
+
     destroyTodoCard( card: TodoCardModel ){
         card.headerColor = null;
         card.taskArray = null;
@@ -118,7 +125,7 @@ export class TodoCardsService {
 
                 
                 this.todoCards[i].taskArray.unshift( newTodoTask );
-                this.getTodoTasks()
+                this.publishAllTasks()
                 // Adding new task to the Main Card (oldest tasks)
                 // this.mainCardService.getTasks( newTodoTask );
             }
@@ -126,7 +133,7 @@ export class TodoCardsService {
        
     }
   
-    getTodoTasks() {
+    private publishAllTasks() {
         let taskArray: TodoTaskModel[] = [];
         for( let card of this.getTodoCards() ){
             for( let task of card.taskArray ){
@@ -134,8 +141,8 @@ export class TodoCardsService {
             }
         }
         return this.todoTaskObservable.next( taskArray );
-        
     }
+
     statusChangeTodoTask( todoTask: TodoTaskModel, newStatus: boolean ){
         let todoCards = this.getTodoCards();
         for(let card of todoCards){
@@ -144,13 +151,14 @@ export class TodoCardsService {
                     card.taskArray[i].checked = newStatus;
 
                     this.setTodoCards(todoCards);
-                    this.getTodoTasks();
+                    this.publishAllTasks();
                 }
             }
         }
     }
-    editTodoTask( todoTask: TodoTaskModel, newDescription: string ){
 
+
+    editTodoTask( todoTask: TodoTaskModel, newDescription: string ){
         let todoCards = this.getTodoCards();
         for (let card of todoCards){
             for(let i = 0; i < card.taskArray.length;  i++){
@@ -158,11 +166,13 @@ export class TodoCardsService {
                     card.taskArray[i].description = newDescription;
 
                     this.setTodoCards(todoCards);                    
-                    this.getTodoTasks();
+                    this.publishAllTasks();
                 }
             }
         }
     }
+
+
     deleteTodoTask( todoTask: TodoTaskModel ) {
         let todoCards = this.getTodoCards();
         for (let card of todoCards){
@@ -171,7 +181,7 @@ export class TodoCardsService {
                     card.taskArray.splice(i, 1);
                     
                     this.setTodoCards(todoCards);
-                    this.getTodoTasks();
+                    this.publishAllTasks();
                 }
             }
         }

@@ -11,10 +11,9 @@
                     <input type   = "checkbox"
                         name      = "task status"
                         class     = "task--done--status"
-                        id        = "todo--card--task--status-{{randomTaskNumber}}"
                         [checked] = "task.checked">
                     <!--Random Task Number required for the custom checkbox-->
-                    <label for="todo--card--task--status-{{randomTaskNumber}}"
+                    <label 
                         (click)='todoTaskStatusChanged()'>
                     </label>
                 </div>          
@@ -35,7 +34,7 @@
             <a class          = "taskMenuButton"
                (click)        = 'toggleTaskDropdownMenu()'
                (clickOutside) = 'closeDropdownMenu()'
-                cursor-pointer-d>
+                cursor-pointer-directive>
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>
         <!--DropDown Menu Button :: END -->        
@@ -48,14 +47,14 @@
                     <li class="dropdownMenuItem">
                         <a class   = "dropdownMenuLink"
                            (click) = 'enableTaskDescriptionChange($event)'
-                            cursor-pointer-d>
+                            cursor-pointer-directive>
                             Edit Task
                         </a>
                     </li>
                     <li class="dropdownMenuItem">
                         <a class   = "dropdownMenuLink"
                            (click) = 'deleteTask($event)'
-                            cursor-pointer-d>
+                            cursor-pointer-directive>
                             Delete Task
                         </a>
                     </li>

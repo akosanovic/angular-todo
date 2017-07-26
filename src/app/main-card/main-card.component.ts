@@ -5,7 +5,15 @@ import { Response } from '@angular/http';
 import { DataStorageService } from './../shared/services/data-storage/data-storage.service';
 import 'rxjs/Rx';
 
-import {  Component, EventEmitter, NgModule, OnInit,  Output, ViewChild, ViewEncapsulation, ElementRef } from '@angular/core';
+import { Component, 
+         EventEmitter,
+         NgModule,
+         OnInit, 
+         Output, 
+         ViewChild, 
+         ViewEncapsulation, 
+         ElementRef, 
+         AfterViewInit } from '@angular/core';
 
 
 
@@ -21,9 +29,12 @@ import {  Component, EventEmitter, NgModule, OnInit,  Output, ViewChild, ViewEnc
 
 export class MainCardComponent implements OnInit {
 
-    oldestTaskArray = [];
+    oldestTaskArray       = [];
     floatingButtonsHidden = true;
-    noOldTasks: boolean = true;
+    noOldTasks: boolean   = true;
+    
+
+    cardCounter: number = 0;
     // Outputing events
     @Output() newCardCreated = new EventEmitter<any>();
     
@@ -31,18 +42,18 @@ export class MainCardComponent implements OnInit {
    
    
    
-   
+    ngOnInit() { }
+
    constructor(  private mainCardService: MainCardService,
                  private dataStorageService: DataStorageService,
-                 private todoCardsService  : TodoCardsService ) {}
-    
-    ngOnInit() {
-        this.todoCardsService.getTodoTasks();
+                 private todoCardsService  : TodoCardsService ) {
+
+                     
         // TodoTask Observable
         this.todoCardsService.todoTaskObservable
             .subscribe(
                 (todoTask: TodoTaskModel[]) => {
-                    console.log('new todoTask', todoTask)
+                    
                     this.oldestTaskArray = todoTask;
                     this.checkIfOldTasks();
                 }
@@ -52,14 +63,14 @@ export class MainCardComponent implements OnInit {
             
         this.checkIfOldTasks();
         console.log("No old tasks", this.noOldTasks)
-        // setTimeout(
-        //     () => {
-        //         this.oldestTaskArray = this.todoCardsService.getTodoTasks();
-        //         console.log('Main card Oldest task array, ', this.oldestTaskArray)
-        //     }, 1000
-        // )
+
     }
     
+    
+
+
+
+
     checkIfOldTasks(){
         if(this.oldestTaskArray.length <= 0){
             this.noOldTasks = true;
@@ -87,18 +98,18 @@ export class MainCardComponent implements OnInit {
     createNewCard(e){
         e.stopPropagation();
         
+        
         // this.newCardCreated.emit()
-        this.todoCardsService.addTodoCard();
+        this.todoCardsService.addTodoCard(this.cardCounter);
         this.floatingButtonsHidden = true;
         this.dataStorageService.storeData();
+
+        this.cardCounter++;
     }
-
-
-
     createNewTask(e){
         e.stopPropagation();
-        console.log('create new task');
 
+        console.log('create new task');
         this.floatingButtonsHidden = true;
     }
 }

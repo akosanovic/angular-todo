@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostBinding, HostListener, OnInit, Renderer2 } from '@angular/core';
 
 @Directive({
-    selector: '[cursor-pointer-d]'
+    selector: '[cursor-pointer-directive]'
 })
 export class CursorPointerDirective implements OnInit {
   element;
