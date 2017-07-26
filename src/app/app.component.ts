@@ -37,8 +37,8 @@ export class AppComponent implements OnInit  {
         this.todoCardService.todoCardsObservable
             .subscribe(
                 (todoCards : TodoCardModel[]) => {
-                    this.todoCardsLoaded( todoCards)
                     
+                    this.todoCardsLoaded( todoCards)
                 }
             )
         this.todoCardService.todoCardsObservable;        

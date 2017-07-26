@@ -61,7 +61,6 @@ export class DataStorageService implements OnInit{
                     this.todoCardsService.setTodoCards(todoCards);
                 }
                 
-            )
-    }
+            )}
 
 }
