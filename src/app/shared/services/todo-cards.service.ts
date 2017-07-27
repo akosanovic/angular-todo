@@ -1,10 +1,7 @@
+import { SimpleTodoCardModel } from './../simple-todo-card.model';
 import { TodoTaskModel } from './../todo-task.model';
 import { MainCardService } from './main-card.service';
-import { TodoTaskService } from './todo-task.service';
 
-// Modules Used
-
-import { TodoCardModel } from './../../todo-card/todo-card.model';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable, Subject } from 'rxjs/Rx';
@@ -15,11 +12,10 @@ import { Observable, Subject } from 'rxjs/Rx';
 @Injectable()
 export class TodoCardsService {
     // OBSERVABLES
-    todoCardsObservable = new Subject<TodoCardModel[]>();
-    todoTaskObservable = new Subject <TodoTaskModel[]>();
 
-    constructor( private todoTaskService   : TodoTaskService,
-                 private http              : Http) { }
+  
+
+    constructor( ) { }
 
 
     private todoCards: TodoCardModel[] = []   
@@ -29,18 +25,7 @@ export class TodoCardsService {
     }
 
 
-    addTodoCard( cardID:number ):void {
-        let id: number             = cardID;
-        let headerColor: string    = this.getCardHeaderColor(cardID);
-        let title: string          = this.getCardTitle();
-        let tasks: TodoTaskModel[] = this.getTasks();
-        const newCard = new TodoCardModel(id, headerColor, title, tasks)
 
-
-        console.log('New Card created', newCard);
-        this.todoCards.push( newCard );
-        this.todoCardsObservable.next(this.todoCards.slice());
-    }
 
     
     setTodoCards( cards?: TodoCardModel[] ) {
@@ -64,7 +49,7 @@ export class TodoCardsService {
         
         let colorArrayLenth:number = colorArray.length;
        
-        if ( id >= colorArrayLenth){
+        if ( id >= colorArrayLenth){ 
             id = id % colorArrayLenth;
         }
         let colorArrayHeader = colorArray[id]+'CardHeader'
@@ -77,45 +62,8 @@ export class TodoCardsService {
         return title;
     }
 
-    
-    getTasks(taskArray?: TodoTaskModel[] ): TodoTaskModel[]{
-        let tasks: TodoTaskModel[] = taskArray ? taskArray : [];
-        return tasks;
-    }
-
-
-
-
-
-// EDIT CARD
-    onTitleChange (id: number, newTitle: string ): void{
-        this.todoCards[id].title = newTitle;
-        console.log('new title is ', newTitle);
-    }
-
-
-    onCardDelete( deletedCardID:number ){
-        for(let i = 0; i < this.todoCards.length; i++){
-            if( this.todoCards[i]['id'] === deletedCardID ){
-                let card = this.todoCards.splice(i, 1);
-                this.destroyTodoCard(card[0]);   
-                this.setTodoCards(this.todoCards)             
-            }
-        }
-    }
-
-
-    destroyTodoCard( card: TodoCardModel ){
-        card.headerColor = null;
-        card.taskArray = null;
-        card.id = null;
-        card.title = null;
-        card = null;
-    }
-     
-    
     // TASKS
-    addNewTask( cardID: number,  description: string, checked: boolean  ): void {
+    addNewTask( cardID: number,  description: string, checked: boolean  ): void{
        
         for(let i = 0; i < this.todoCards.length; i++) {
             if(this.todoCards[i]['id'] === cardID){

@@ -101,7 +101,7 @@
                 
                 <!--Child Component of the TodoCard Component  -->
                 <app-todo-task 
-                    *ngFor = "let task of card.taskArray"
+                    *ngFor = "let task of cardTasksArray" 
                     [todoTask] = 'task'>
                 </app-todo-task>
                 

@@ -7,13 +7,7 @@ import 'rxjs/Rx';
 @Injectable()
 export class MainCardService {
 
-    taskArray: TodoTaskModel[] = [
-        new TodoTaskModel(1, "Testing Task", false),
-    ]
-
-    oldestTaskArray: TodoTaskModel [] = [
-        new TodoTaskModel(1, "Testing Task", false)        
-    ];
+    oldestTaskArray: TodoTaskModel [] = [ ];
 
     constructor( private todoCardsService: TodoCardsService ) { }
 
@@ -34,11 +28,6 @@ export class MainCardService {
     
     removeTasks( todoTask: TodoTaskModel ){
         
-        for (let i = 0; i < this.taskArray.length; i++){
-            if (this.taskArray[i] === todoTask){
-                this.taskArray.splice( i, 1);
-            }
-        }
         // if the task is removed from main-card service remove it in the todo card where 
         // it's positioned
     }

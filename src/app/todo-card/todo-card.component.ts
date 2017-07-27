@@ -1,4 +1,5 @@
-import { TodoCardModel } from './todo-card.model';
+import { TodoTaskModel } from './../shared/todo-task.model';
+import { SimpleTodoCardModel } from './../shared/simple-todo-card.model';
 import { Response } from '@angular/http';
 import { DataStorageService } from './../shared/services/data-storage/data-storage.service';
 
@@ -30,9 +31,7 @@ export class TodoCardComponent implements OnInit {
     showTaskInput        = false;
     disableCardTitle     = true;
 
-    taskCounter;
-
-    card: TodoCardModel;
+    cardTasksArray: TodoTaskModel[] = [];
 
     // Input Field for the new task
     @ViewChild('inputTaskDetails') inputTaskDetails: ElementRef;
@@ -40,11 +39,10 @@ export class TodoCardComponent implements OnInit {
     
     // IMPORTANT
     // creating new instance of the todo card, listen for event when card is created
-    @Input('todoCard') newCard: TodoCardModel;
+    @Input('todoCard') card: SimpleTodoCardModel;
+
 
     // OBSERVABLES
-
-    
 
 
     // LIFE HOOKS
@@ -55,9 +53,12 @@ export class TodoCardComponent implements OnInit {
    
 
     ngOnInit() {
-        this.card           = this.newCard;
-        this.card.taskArray = this.newCard.taskArray;
-        // this.taskArray = this.todoTaskService.taskArray;
+        
+        this.dataStorageService.getTasksForCard( this.card.id ).subscribe(
+            (result: TodoTaskModel[]) =>{
+                this.cardTasksArray = result;
+            }
+        )
     }
 
 

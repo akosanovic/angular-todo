@@ -1,3 +1,4 @@
+import { SimpleTodoCardModel } from './../shared/simple-todo-card.model';
 import { TodoTaskModel } from './../shared/todo-task.model';
 import { MainCardService } from './../shared/services/main-card.service';
 import { TodoCardsService } from './../shared/services/todo-cards.service';
@@ -49,21 +50,20 @@ export class MainCardComponent implements OnInit {
                  private todoCardsService  : TodoCardsService ) {
 
                      
-        // TodoTask Observable
-        this.todoCardsService.todoTaskObservable
-            .subscribe(
-                (todoTask: TodoTaskModel[]) => {
+        // // TodoTask Observable
+        // this.todoCardsService.todoTaskObservable
+        //     .subscribe(
+        //         (todoTask: TodoTaskModel[]) => {
                     
-                    this.oldestTaskArray = todoTask;
-                    this.checkIfOldTasks();
-                }
-            )
+        //             this.oldestTaskArray = todoTask;
+        //             this.checkIfOldTasks();
+        //         }
+        //     )
 
 
             
         this.checkIfOldTasks();
         console.log("No old tasks", this.noOldTasks)
-
     }
     
     
@@ -97,15 +97,17 @@ export class MainCardComponent implements OnInit {
 
     createNewCard(e){
         e.stopPropagation();
-        
-        
-        // this.newCardCreated.emit()
-        this.todoCardsService.addTodoCard(this.cardCounter);
         this.floatingButtonsHidden = true;
-        this.dataStorageService.storeData();
 
-        this.cardCounter++;
+        let id    = (new Date()).getTime();
+        let color = this.todoCardsService.getCardHeaderColor( id );
+        let title = this.todoCardsService.getCardTitle();
+       
+        let simpleCard = new SimpleTodoCardModel( id, color, title );
+       
+        this.dataStorageService.storeCard( simpleCard )  
     }
+
     createNewTask(e){
         e.stopPropagation();
 

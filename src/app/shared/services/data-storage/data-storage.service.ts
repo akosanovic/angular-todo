@@ -1,4 +1,7 @@
-import { TodoCardModel } from './../../../todo-card/todo-card.model';
+import { TodoTaskModel } from './../../todo-task.model';
+import { SimpleTodoCardModel } from './../../simple-todo-card.model';
+import { Observable, Subject } from 'rxjs/Rx';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { TodoCardsService } from '../todo-cards.service';
 
 import { Injectable, OnInit } from '@angular/core';
@@ -13,26 +16,51 @@ import 'rxjs/Rx';
 export class DataStorageService implements OnInit{
 
     constructor( private http: Http, 
-                 private todoCardsService: TodoCardsService) { }
+                 private todoCardsService: TodoCardsService,
+                 private firebase_db: AngularFireDatabase ) { }
     ngOnInit(){}
 
 
 
-    storeData(){
-        this.http.put('https://todo-app-13093.firebaseio.com/data.json', this.todoCardsService.getTodoCards() )
-            .subscribe(
-                (response: Response) => {
-                     console.log('Data Stored to Firebase', response);
-                },
-                (error) => {
-                    console.log( "Error occured", error );
-                }
-            )
+
+    storeCard( simpleCard: SimpleTodoCardModel ){
+        this.firebase_db.database.ref('cards/'+ simpleCard.id ).set( simpleCard )
+    }
+    storeTask( todoTask: TodoTaskModel ) {
+
+    }
+
+
+    getCards(): Observable<SimpleTodoCardModel[]> {
+
+        let subject: Subject<SimpleTodoCardModel[]> = new Subject();
+
+        this.firebase_db.database.ref('cards/').on('value',
+            (cardArray)=>{
+                
+                subject.next( <SimpleTodoCardModel[]> cardArray.toJSON() );
+            }
+        )
+
+        return subject.asObservable();
     }
 
 
 
+    getTasksForCard( cardId: number ): Observable<TodoTaskModel[]> {
+        let subject: Subject<TodoTaskModel[]> = new Subject();
+
+        this.firebase_db.database.ref('cards/').orderByChild('id').equalTo(cardId).on(
+            'value',  (data) =>{
+               subject.next( <TodoTaskModel[]> data.toJSON() )
+            }    
+        );
+        return subject.asObservable();
+    }
+
+    
     getData(){
+        
         return this.http.get('https://todo-app-13093.firebaseio.com/data.json')
             // If there is no taskArray in card add taskArray field
             .map(
