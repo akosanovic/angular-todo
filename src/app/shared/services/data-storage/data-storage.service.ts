@@ -1,7 +1,7 @@
 import { TodoTaskModel } from './../../todo-task.model';
 import { SimpleTodoCardModel } from './../../simple-todo-card.model';
 import { Observable, Subject } from 'rxjs/Rx';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable, observeQuery } from 'angularfire2/database';
 import { TodoCardsService } from '../todo-cards.service';
 
 import { Injectable, OnInit } from '@angular/core';
@@ -21,74 +21,79 @@ export class DataStorageService implements OnInit{
     ngOnInit(){}
 
 
-
-
-    storeCard( simpleCard: SimpleTodoCardModel ){
-        this.firebase_db.database.ref('cards/'+ simpleCard.id ).set( simpleCard )
-    }
-    storeTask( todoTask: TodoTaskModel ) {
-
-    }
-
-
+    
+    // CARDS
     getCards(): Observable<SimpleTodoCardModel[]> {
-
-        let subject: Subject<SimpleTodoCardModel[]> = new Subject();
-
-        this.firebase_db.database.ref('cards/').on('value',
-            (cardArray)=>{
+        return this.firebase_db.list("cards")         
+    }
                 
-                subject.next( <SimpleTodoCardModel[]> cardArray.toJSON() );
-            }
-        )
-
-        return subject.asObservable();
+    getCardById( cardId: number ):FirebaseObjectObservable<SimpleTodoCardModel> {
+        return this.firebase_db.object('cards/'+cardId );
     }
 
+    storeCard( simpleCard: SimpleTodoCardModel ): Observable<any> {
+        let promise =  this.firebase_db.object('cards/'+simpleCard.id ).set(simpleCard)
+        return Observable.fromPromise(promise);
+    }
+
+    editCard( cardId: number, title: string ):Observable<any>{
+        let promise = this.getCardById(cardId).update({ title: title})
+        return Observable.fromPromise(promise);
+    }
+
+    // Recive Data  
+    deleteCard( card: SimpleTodoCardModel ){
+
+    }
+   
 
 
+    // TASKS
+    getTaskById( taskId:number ): Observable<TodoTaskModel>{
+        return this.firebase_db.object('tasks/'+taskId)
+    }
+   
     getTasksForCard( cardId: number ): Observable<TodoTaskModel[]> {
-        let subject: Subject<TodoTaskModel[]> = new Subject();
+        return this.firebase_db.list('tasks/', {
+            query:{
+                orderByChild: 'cardId',
+                equalTo: cardId
+            }
+        });
+   }
 
-        this.firebase_db.database.ref('cards/').orderByChild('id').equalTo(cardId).on(
-            'value',  (data) =>{
-               subject.next( <TodoTaskModel[]> data.toJSON() )
-            }    
-        );
-        return subject.asObservable();
+getOldestTasks(): Observable<TodoTaskModel[]>{
+       return this.firebase_db.list('tasks/', {
+           query:{
+               limitToLast: 3
+           }
+       })
+   }
+
+    storeTask( todoTask: TodoTaskModel ): Observable<any> {
+        let promise =  this.firebase_db.object('tasks/'+todoTask.id ).set(todoTask)
+        console.log(promise)
+        return Observable.fromPromise(promise);
+    }
+
+    updateTask( taskId:number, fieldToChange: string, valueToPass:any ){
+        this.firebase_db.object( 'tasks/' + taskId ).update({ fieldToChange: valueToPass })
+    }
+    
+    updateTaskStatus( taskId:number, status:boolean ){
+       this.firebase_db.object
+    }
+
+    editTaskDescription( taskId: number, newDescription: string ){
+        this.firebase_db.object( 'tasks/'+ taskId ).update( {description: newDescription} )
+    }
+
+    deleteTask( taskId:number ){
+        this.firebase_db.object( 'tasks/'+ taskId ).remove();
     }
 
     
-    getData(){
-        
-        return this.http.get('https://todo-app-13093.firebaseio.com/data.json')
-            // If there is no taskArray in card add taskArray field
-            .map(
-                (response?: Response) => {
-                    let todoCards : TodoCardModel[];
-                    
-                    if (response.json()){
-                        console.log('RESPONSE', response)
-                        // Reciving String of todo cards that we need to extracth JS objects from                        
-                        todoCards = response.json()
-                        for( let cards of todoCards ){
-                            if (!cards.taskArray){
-                                cards.taskArray = [];
-                            }
-                        }
-                    }
-                    else {
-                        todoCards = [];
-                    }
-                    return todoCards;
-                }
-            )
-            .subscribe (
-                ( todoCards: TodoCardModel[] ) => {
-                    // assinging the recived, extracted JS object to the TodoCardService 
-                    this.todoCardsService.setTodoCards(todoCards);
-                }
-                
-            )}
+    
 
+    
 }

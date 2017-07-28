@@ -30,6 +30,9 @@ export class TodoCardComponent implements OnInit {
     showCardDrpodownMenu = false;
     showTaskInput        = false;
     disableCardTitle     = true;
+    
+    // HeaderLoader
+    headerLoader = false;
 
     cardTasksArray: TodoTaskModel[] = [];
 
@@ -42,8 +45,6 @@ export class TodoCardComponent implements OnInit {
     @Input('todoCard') card: SimpleTodoCardModel;
 
 
-    // OBSERVABLES
-
 
     // LIFE HOOKS
     constructor( private newTaskInput:ElementRef,
@@ -53,10 +54,10 @@ export class TodoCardComponent implements OnInit {
    
 
     ngOnInit() {
-        
         this.dataStorageService.getTasksForCard( this.card.id ).subscribe(
-            (result: TodoTaskModel[]) =>{
-                this.cardTasksArray = result;
+            (todoTaskArray: TodoTaskModel[]) =>{
+                this.cardTasksArray = todoTaskArray;
+                console.log('Task Array', todoTaskArray)
             }
         )
     }
@@ -84,25 +85,31 @@ export class TodoCardComponent implements OnInit {
 
 
     changeCardTitle(){
-        let inputTitle:string = this.cardTitleRef.nativeElement.value
+        let newTitleInput:string = this.cardTitleRef.nativeElement.value
         let id: number = this.card.id;
-       if (inputTitle){
-            this.todoCardsService.onTitleChange( id, inputTitle )
-       }
-       else {
-           this.cardTitleRef.nativeElement.value = this.card.title;
-       }
+        
+        if (newTitleInput){  
+            this.headerLoader = true;          
+            this.dataStorageService.editCard( id, newTitleInput)
+                .subscribe(
+                    (value) => {
+                        console.log('Todo Card Change card Title', value)
+                        this.headerLoader = false;
+                    }
+                )                
+        }
+        else {
+            this.cardTitleRef.nativeElement.value = this.card.title;
+        }
        this.disableCardTitle = true;
-        this.dataStorageService.storeData();  
-    }
+     }
 
     
     deleteTodoCard(e) {
         e.stopPropagation();
 
-        this.todoCardsService.onCardDelete(this.card.id);
         this.hideCardMenu();
-        this.dataStorageService.storeData();
+        this.dataStorageService.deleteCard( this.card );
     }// Card Menu Options :: END
 
 
@@ -119,26 +126,33 @@ export class TodoCardComponent implements OnInit {
 
         /*if clicked on enter (replace this with custom directive)*/
         if(e.target.value ) {
-            // Add new Todo Task Object to the Array
-            taskDescription = this.inputTaskDetails.nativeElement.value;
-           
-            this.todoCardsService.addNewTask( this.card.id, taskDescription, false );
-            // this.todoTaskService.addNewTask( taskDescription, false )
-
-            this.dataStorageService.storeData();
+            // New TodoTask
+            taskDescription = this.inputTaskDetails.nativeElement.value;           
+            let tempTaskId = (new Date()).getTime()
             
-            this.hideNewTaskInput(e);
+            let task = new TodoTaskModel( tempTaskId, this.card.id, taskDescription, false )
+            console.log(task, "task description")
+            this.dataStorageService.storeTask(task)
+             this.hideNewTaskInput(e);
         }
     }
 
     newTaskInputBlured(e){
         let taskDescription: string = this.inputTaskDetails.nativeElement.value;
         if (taskDescription && taskDescription != ' '){
-            console.log('Task Description', taskDescription)
-            this.todoCardsService.addNewTask( this.card.id, taskDescription, false );
+
+           // New TodoTask
+            taskDescription = this.inputTaskDetails.nativeElement.value;           
+            let tempTaskId = (new Date()).getTime()
+            
+            let task = new TodoTaskModel( tempTaskId, this.card.id, taskDescription, false )
+            this.dataStorageService.storeTask( task );   
         }
         this.hideNewTaskInput(e)
+    }
 
+    addNewTask(){
+        
     }
 
 

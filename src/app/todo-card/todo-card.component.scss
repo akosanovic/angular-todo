@@ -53,6 +53,11 @@
 			font-weight: 500;
 			color: $white;
 		}
+		.loadingIcon{
+			position: absolute;
+			top  : 0;
+			right: 0;
+		}
 	}
 
 
@@ -194,11 +199,11 @@
 	//  		- Task Items   - User can set the description of thask and change it on double click
 
 .inputGroup {
-display : inline-block;
-width: 100%;
-padding-left: $lh+$lh/2;
-position: relative;
-vertical-align: middle;
+	display : inline-block;
+	width: 100%;
+	padding-left: $lh+$lh/2;
+	position: relative;
+	vertical-align: middle;
 
 
 .absolutePositionedPrefix {

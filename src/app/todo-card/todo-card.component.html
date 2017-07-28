@@ -8,7 +8,9 @@
             <div class="todoCardHeader {{card.headerColor}}"  >
 
             <!-- #1 -->
-            <div class="inputGroup">
+            <div class="inputGroup" 
+                loader-directive
+                [showLoader]="headerLoader">
                 <div class="absolutePositionedPrefix">
                     <div class="iconContainer">
                         <i class = "fa fa-file-text-o" aria-hidden="true"></i>
@@ -22,6 +24,10 @@
                        (keyup.enter) = 'changeCardTitle()'
                        value         = "{{card.title}}"
                        #cardTitle>
+                
+                <!--Loading Icon  -->
+                <i *ngIf='headerLoader'
+                    class="fa fa-spinner loadingIcon fa-pulse fa-fw"></i>
             </div>
 
 
@@ -30,6 +36,7 @@
             <a class="cardMenuButton"
                (click)='toggleCardMenu()'
                (clickOutside)='hideCardMenu()'
+               [hidden]= headerLoader
                cursor-pointer-directive>
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>

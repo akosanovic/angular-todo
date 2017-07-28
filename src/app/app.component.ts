@@ -29,10 +29,11 @@ export class AppComponent implements OnInit  {
    
     ngOnInit(){
 
-        let todoCards = this.dataStorageService.getCards().subscribe(
-            (result:SimpleTodoCardModel[])=>{
-                this.todoCardArray = result;
-            }
+        let todoCards = this.dataStorageService.getCards()
+            .subscribe(
+                (result:SimpleTodoCardModel[])=>{
+                    this.todoCardArray = result;
+                }
         );            
     }  
 

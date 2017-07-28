@@ -1,3 +1,6 @@
+import { TodoTaskService } from './shared/services/todo-task.service';
+import { CommonModule } from '@angular/common';
+import { LoaderDirective } from './shared/directives/loader/loader.directive';
 import { TodoTaskComponent } from './todo-card/todo-task/todo-task.component';
 import { CursorPointerDirective } from './shared/directives/cursor-pointer/cursor-pointer.directive';
 import { MainCardService } from './shared/services/main-card.service';
@@ -29,12 +32,15 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 export const firebaseConfig = {
-	apiKey           : "AIzaSyBJ6paj7uVP5Kkk-iYiOXl5Qk-IhMU8D3o",
-	authDomain       : "todo-app-13093.firebaseapp.com",
-	databaseURL      : "https://todo-app-13093.firebaseio.com",
-	projectId        : "todo-app-13093",
-	storageBucket    : "todo-app-13093.appspot.com",
-	messagingSenderId: "579735635782"
+	production: false,
+    firebase: {
+		apiKey           : "AIzaSyBJ6paj7uVP5Kkk-iYiOXl5Qk-IhMU8D3o",
+		authDomain       : "todo-app-13093.firebaseapp.com",
+		databaseURL      : "https://todo-app-13093.firebaseio.com",
+		projectId        : "todo-app-13093",
+		storageBucket    : "todo-app-13093.appspot.com",
+		messagingSenderId: "579735635782"
+	}
 };
 
 
@@ -46,16 +52,18 @@ export const firebaseConfig = {
 		TodoTaskComponent ,
 		FocusDirective,
 
-    // directives
-    CheckedBackgroundDirective,
-    ClickOutsideDirective,
-    CursorPointerDirective
+		// directives
+		CheckedBackgroundDirective,
+		ClickOutsideDirective,
+		CursorPointerDirective,
+		LoaderDirective,
   ],
 	imports: [
+		CommonModule,
 		BrowserModule,
 		HttpModule,
 		FormsModule,
-		AngularFireModule.initializeApp(firebaseConfig),
+		AngularFireModule.initializeApp(firebaseConfig.firebase),
 		AngularFireDatabaseModule,
 		AngularFireAuthModule
   ],
@@ -64,7 +72,8 @@ export const firebaseConfig = {
 	providers: [
 		TodoCardsService, 
 		DataStorageService, 
-		MainCardService
+		MainCardService,
+		TodoTaskService
 	],
 
   bootstrap: [AppComponent]

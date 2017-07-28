@@ -55,7 +55,7 @@ export class TodoTaskComponent implements OnInit {
         this.taskChecked = !this.taskChecked;
 
         this.todoCardService.statusChangeTodoTask(this.task, this.taskChecked);
-        this.dataStorageService.storeData();
+        this.dataStorageService.updateTaskStatus( this.task.id, this.task.checked );
 
     }
 
@@ -74,25 +74,29 @@ export class TodoTaskComponent implements OnInit {
         this.taskDescriptionInput.nativeElement.focus();
         this.closeDropdownMenu();
     }
+    
     disableTaskDescription(){
         this.taskDescriptionDisabled = true;
     }
+
+
+    // Task Menu Options
     onTaskDescriptionChange(){
         let description = this.taskDescriptionInput.nativeElement.value;
         if(description){
-            this.todoCardService.editTodoTask( this.task, description  )
+            this.dataStorageService.editTaskDescription( this.task.id, description  )
             this.disableTaskDescription();
-            this.dataStorageService.storeData();
         }
+
         else{
             this.taskDescriptionInput.nativeElement.value = this.task.description;
         }
     }
+
     deleteTask(e) {
-         e.stopPropagation();
-        
+        e.stopPropagation();
+
         console.log(`Delete todo Task `, this.task);
-        this.todoCardService.deleteTodoTask(this.task);
-        this.dataStorageService.storeData()                
+        this.dataStorageService.deleteTask(this.task.id);          
     }
 }

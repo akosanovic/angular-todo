@@ -30,11 +30,10 @@ import { Component,
 
 export class MainCardComponent implements OnInit {
 
-    oldestTaskArray       = [];
+    oldestTaskArray: TodoTaskModel[] = [];
     floatingButtonsHidden = true;
     noOldTasks: boolean   = true;
     
-
     cardCounter: number = 0;
     // Outputing events
     @Output() newCardCreated = new EventEmitter<any>();
@@ -49,16 +48,14 @@ export class MainCardComponent implements OnInit {
                  private dataStorageService: DataStorageService,
                  private todoCardsService  : TodoCardsService ) {
 
-                     
-        // // TodoTask Observable
-        // this.todoCardsService.todoTaskObservable
-        //     .subscribe(
-        //         (todoTask: TodoTaskModel[]) => {
-                    
-        //             this.oldestTaskArray = todoTask;
-        //             this.checkIfOldTasks();
-        //         }
-        //     )
+    this.dataStorageService.getOldestTasks()
+        .subscribe(
+            (todoTasks: TodoTaskModel[]) =>{
+                    this.oldestTaskArray = todoTasks
+                    this.checkIfOldTasks();
+            }
+        )
+     
 
 
             
