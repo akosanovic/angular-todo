@@ -13,6 +13,7 @@ import { Component, ElementRef, Input, OnInit, ViewEncapsulation, ViewChild } fr
     selector   : 'app-todo-task',
     templateUrl: './todo-task.component.html',
     styleUrls  : ['./todo-task.component.scss'],
+    providers  : [TodoTaskService]
 })
 
 export class TodoTaskComponent implements OnInit {
@@ -22,7 +23,7 @@ export class TodoTaskComponent implements OnInit {
     // TodoTask Description Input
     @ViewChild('todoTaskInput') taskDescriptionInput: ElementRef
 
-    taskChecked:boolean = false;    
+    taskChecked     :boolean = false;
     randomTaskNumber: number = this.genarateRandomNumber();
     // Property Binding
     showTaskDrpodownMenu: boolean = false;
@@ -31,18 +32,23 @@ export class TodoTaskComponent implements OnInit {
 
 
 
-    constructor( private todoTaskService: TodoTaskService,
-                 private todoCardService: TodoCardsService,
-                 private dataStorageService: DataStorageService) {}
+    constructor( private todoCardService: TodoCardsService,
+                 private dataStorageService: DataStorageService,
+                 private todoTaskService: TodoTaskService) {}
     
 
     ngOnInit() {
-       this.taskChecked = this.task.checked;
-       console.log("Task Checked", this.taskChecked)
+
+        this.taskChecked = this.task.checked;
+        
+        this.todoTaskService.editTaskDescription$
+            .subscribe(
+                (taskDecription: string) => {
+                    this.task.description = taskDecription;
+                }
+            )
+
     }
-
-
-
 
     // required for the custom checkbox
     genarateRandomNumber(): number{
@@ -50,24 +56,23 @@ export class TodoTaskComponent implements OnInit {
         return number;
     }
     
-    todoTaskStatusChanged(){
-        console.log('Task Status Changed');
+    todoTaskStatusChanged(){       
         this.taskChecked = !this.taskChecked;
-
-        this.todoCardService.statusChangeTodoTask(this.task, this.taskChecked);
+        this.task.checked = this.taskChecked;
+     
         this.dataStorageService.updateTaskStatus( this.task.id, this.task.checked );
-
     }
 
     // Dropdown Menu
     toggleTaskDropdownMenu(){
         this.showTaskDrpodownMenu = !this.showTaskDrpodownMenu;
     }
+
     closeDropdownMenu(){
         this.showTaskDrpodownMenu = false;
     }
 
-    // Input Task Description
+    // Description Input
     enableTaskDescriptionChange(e){
         e.stopPropagation();
         this.taskDescriptionDisabled = false;
@@ -80,11 +85,11 @@ export class TodoTaskComponent implements OnInit {
     }
 
 
-    // Task Menu Options
+    // Menu Options
     onTaskDescriptionChange(){
         let description = this.taskDescriptionInput.nativeElement.value;
         if(description){
-            this.dataStorageService.editTaskDescription( this.task.id, description  )
+            this.todoTaskService.editTaskDescription(this.task.id, description)
             this.disableTaskDescription();
         }
 
@@ -97,6 +102,6 @@ export class TodoTaskComponent implements OnInit {
         e.stopPropagation();
 
         console.log(`Delete todo Task `, this.task);
-        this.dataStorageService.deleteTask(this.task.id);          
+        this.todoTaskService.deleteTask(this.task.id);          
     }
 }

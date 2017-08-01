@@ -73,7 +73,6 @@ export const firebaseConfig = {
 		TodoCardsService, 
 		DataStorageService, 
 		MainCardService,
-		TodoTaskService
 	],
 
   bootstrap: [AppComponent]

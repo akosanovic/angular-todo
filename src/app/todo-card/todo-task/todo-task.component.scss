@@ -1,7 +1,7 @@
 @import "../../../styles.scss";
 
 .taskItemContainer {
-	padding: $lh $lh/2;
+	padding: $lh $lh*2 $lh $lh/2;
 	background-color: $white;
 
 	&.taskChecked {
@@ -71,7 +71,7 @@
 .taskMenuButton {
 	position: absolute;
 	top  : 0;
-	right: 0;
+	right: -$lh;
 	padding : 0 $lh/2;
 	.fa-ellipsis-v {
 		font-size: 19px;
@@ -83,7 +83,7 @@
 	@include transition(height 0.5s ease, overflow 0.7s ease-in-out );		
 	position: absolute;
 	top  : $lh;
-	right: $lh/2;
+	right: -$lh/3;
 	display: block;
 
 	height: 0;
@@ -155,7 +155,6 @@
 			display: inline-block;
 			vertical-align: bottom;
 			cursor: pointer;
-
 		}
 
 		/* checkbox aspect */

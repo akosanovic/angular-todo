@@ -1,4 +1,5 @@
-import { TodoCardsService } from './todo-cards.service';
+import { Subject, Observable } from 'rxjs/Rx';
+import { DataStorageService } from './data-storage/data-storage.service';
 import { TodoTaskModel } from './../todo-task.model';
 import { Injectable, OnInit } from '@angular/core';
 import 'rxjs/Rx';
@@ -7,23 +8,17 @@ import 'rxjs/Rx';
 @Injectable()
 export class MainCardService {
 
-    oldestTaskArray: TodoTaskModel [] = [ ];
+    private getOldestTasksSubject = new Subject<TodoTaskModel[]>();
+    getOldestTasks$ = this.getOldestTasksSubject.asObservable();
 
-    constructor( private todoCardsService: TodoCardsService ) { }
+
+    constructor( private dataStorageService: DataStorageService ) { }
 
 
   
 
-    getTasks()  {  
-        // let todoCards = this.todoCardsService.getTodoCards();
-        // console.log('Main Card Service cards,  ', todoCards)
-        // for( let card of todoCards ){
-        //     for( let task of card.taskArray ){
-        //         this.taskArray.push(task)
-        //     }
-        // }
-        // console.log('Task Array: ', this.taskArray)
-        // return this.taskArray;
+    getOldestTasks(): Observable<TodoTaskModel[]>  {  
+        return this.dataStorageService.getOldestTasks()
     }
     
     removeTasks( todoTask: TodoTaskModel ){

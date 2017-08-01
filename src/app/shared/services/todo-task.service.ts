@@ -8,54 +8,61 @@ import { TodoTaskModel } from './../todo-task.model';
 export class TodoTaskService {
     
     
-    todoTaskCreated$ = new Subject<TodoTaskModel>();
+    private taskCreatedSubject = new Subject<TodoTaskModel>();
+    public todoTaskCreated$ = this.taskCreatedSubject.asObservable();
+    
+    private getTaskForCardSubject = new Subject<any>();
+    getTaskForCard$  = this.getTaskForCardSubject.asObservable();
+
+    private editTaskDescriptionSubject = new Subject<any>();
+    editTaskDescription$ = this.editTaskDescriptionSubject.asObservable();
+
+    private deleteTaskSubject = new Subject<string>();
+    deleteTask$ = this.deleteTaskSubject.asObservable();
 
 
-    constructor( public db: DataStorageService ){
+    constructor( public dataStorageService: DataStorageService ){
     }
 
-    createTask( todoTask: TodoTaskModel ){
-        // this.db.storeTask(todoTask).subscribe(
-        //     (value) => {
-        //         // debugger
-        //         this.todoTaskCreated$.next(todoTask)
-        //     }
-        // )
-
+    storeTask (todoTask: TodoTaskModel) {
+        this.dataStorageService.storeTask( todoTask )
+            .subscribe(
+                ( todoTask: TodoTaskModel ) => {
+                    this.taskCreatedSubject.next(todoTask)
+                }
+            )
+    }
+    getTasksForCard ( cardId: number ) {
+        this.dataStorageService.getTasksForCard( cardId )
+            .subscribe(
+                (value) => {
+                    this.getTaskForCardSubject.next( value )
+                }
+            )
     }
 
     statusChangeTodoTask( id: number, newStatus: boolean ){
-        this.db.updateTaskStatus(id, newStatus);
+        this.dataStorageService.updateTaskStatus(id, newStatus);
     }
 
 
-    editTodoTask( todoTask: TodoTaskModel, newDescription: string ){
-        // let todoCards = this.getTodoCards();
-        // for (let card of todoCards){
-        //     for(let i = 0; i < card.taskArray.length;  i++){
-        //         if( card.taskArray[i] === todoTask ){
-        //             card.taskArray[i].description = newDescription;
-
-        //             this.setTodoCards(todoCards);                    
-        //             this.publishAllTasks();
-        //         }
-        //     }
-        // }
+    editTaskDescription( id: number, newDescription: string ){
+        this.dataStorageService.editTaskDescription( id, newDescription)
+            .subscribe(
+                (newDescription: string) => {
+                    this.editTaskDescriptionSubject.next(newDescription)
+                }
+            )
     }
 
 
-    deleteTodoTask( todoTask: TodoTaskModel ) {
-        // let todoCards = this.getTodoCards();
-        // for (let card of todoCards){
-        //     for( let i = 0; i < card.taskArray.length; i++  ){
-        //         if ( todoTask == card.taskArray[i]){
-        //             card.taskArray.splice(i, 1);
-                    
-        //             this.setTodoCards(todoCards);
-        //             this.publishAllTasks();
-        //         }
-        //     }
-        // }
+    deleteTask( id: number ){
+        this.dataStorageService.deleteTask( id )
+            .subscribe(
+                (returned: any) => {
+                   this.deleteTaskSubject.next(returned)
+                }
+            )
     }
 
 

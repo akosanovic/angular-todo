@@ -1,3 +1,4 @@
+import { DataStorageService } from './data-storage/data-storage.service';
 import { SimpleTodoCardModel } from './../simple-todo-card.model';
 import { TodoTaskModel } from './../todo-task.model';
 import { MainCardService } from './main-card.service';
@@ -8,24 +9,64 @@ import { Observable, Subject } from 'rxjs/Rx';
 
 
 
-
 @Injectable()
 export class TodoCardsService {
 
+    private cardAddedSubject = new Subject<SimpleTodoCardModel>();
+    public cardAdded$ = this.cardAddedSubject.asObservable();
   
 
-    constructor( ) { }
+    public cardDeletedSubject = new Subject<number>();
+    public cardDeleted$ = this.cardDeletedSubject.asObservable();
+
+    private cardEditSubject = new Subject();
+    public cardEdited$ = this.cardEditSubject.asObservable();
 
 
 
+    constructor( private dataStorageService: DataStorageService ) { }
+
+    // Get All Cards on Initial load
+    getAllCards():Observable<SimpleTodoCardModel[]>{
+        return this.dataStorageService.getCards().first();
+    }
 
 
+    storeCard( simpleCard: SimpleTodoCardModel ) {
 
-  
-
-  
-
+        this.dataStorageService.storeCard( simpleCard )
+            .subscribe(
+                ( value ) => {
+                    this.cardAddedSubject.next( simpleCard );
+                }
+            )
+    }
     
+    editCard( cardId: number, cardTitle: string ) {
+        this.dataStorageService.editCard( cardId, cardTitle )
+            .subscribe(
+                ( value ) => {
+                    console.log( "EDIT CARD Type of value ", typeof value );
+                    this.cardEditSubject.next( cardTitle )
+                }
+            )
+
+    }
+
+    deleteCard( cardId: number ) {
+        this.dataStorageService.deleteCard( cardId )
+            .subscribe(
+                (value) => {
+                    this.cardDeletedSubject.next( cardId )
+                }
+            )
+    }
+    
+        
+   
+
+
+  
     getCardHeaderColor(id: number):string {
         const colorArray: [string] = [  "yellow", "turquoise", "purple", "blue", "orange" ];
         
@@ -37,10 +78,12 @@ export class TodoCardsService {
         let colorArrayHeader = colorArray[id]+'CardHeader'
         return colorArrayHeader;
     }
+
     getCardTitle( cardTitle?:string ): string{
         let title: string = cardTitle ? cardTitle : 'Edit Card Title';
         return title;
     }
+
     statusChangeTodoTask( task:TodoTaskModel, status:boolean ){
 
     }

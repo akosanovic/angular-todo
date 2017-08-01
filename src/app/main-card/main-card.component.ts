@@ -42,25 +42,21 @@ export class MainCardComponent implements OnInit {
    
    
    
-    ngOnInit() { }
+    ngOnInit() { 
+        this.mainCardService.getOldestTasks()
+            .subscribe(
+                (oldestTaskArray: TodoTaskModel[]) => {
+                    this.oldestTaskArray = oldestTaskArray;
+                    this.checkIfOldTasks();
+                }
+            )
+    }
 
    constructor(  private mainCardService: MainCardService,
                  private dataStorageService: DataStorageService,
                  private todoCardsService  : TodoCardsService ) {
-
-    this.dataStorageService.getOldestTasks()
-        .subscribe(
-            (todoTasks: TodoTaskModel[]) =>{
-                    this.oldestTaskArray = todoTasks
-                    this.checkIfOldTasks();
-            }
-        )
-     
-
-
-            
+                               
         this.checkIfOldTasks();
-        console.log("No old tasks", this.noOldTasks)
     }
     
     
@@ -77,7 +73,6 @@ export class MainCardComponent implements OnInit {
             console.log('Oldest task array then', this.oldestTaskArray.length)
         }
     }
-
     
     toggleFloatingButtons(e) {
         e.stopPropagation();
@@ -85,6 +80,7 @@ export class MainCardComponent implements OnInit {
         console.log('Show floating buttons - button clicked')
         this.floatingButtonsHidden = !this.floatingButtonsHidden;
     }
+
     hideFloatingButtons(){
         this.floatingButtonsHidden = true;
     }
@@ -102,7 +98,7 @@ export class MainCardComponent implements OnInit {
        
         let simpleCard = new SimpleTodoCardModel( id, color, title );
        
-        this.dataStorageService.storeCard( simpleCard )  
+        this.todoCardsService.storeCard( simpleCard )  
     }
 
     createNewTask(e){

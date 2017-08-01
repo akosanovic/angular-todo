@@ -21,10 +21,9 @@
 
                     
                     <!--ng-template is element that isn't rendered by default-->
-                    <div *ngIf = 'todoCardArray.length === 0'>
-                        No card to display
-                    </div>
-
+                    <ng-template #loaderContainer>
+                        <i class="fa fa-spinner loadingIcon fa-pulse fa-fw"></i>
+                    </ng-template>
                 </div>						
             </div>  
 
