@@ -33,16 +33,16 @@ export class MainCardComponent implements OnInit {
     oldestTaskArray: TodoTaskModel[] = [];
     floatingButtonsHidden = true;
     noOldTasks: boolean   = true;
-    
+
     cardCounter: number = 0;
     // Outputing events
     @Output() newCardCreated = new EventEmitter<any>();
-    
-  
-   
-   
-   
-    ngOnInit() { 
+
+
+
+
+
+    ngOnInit() {
         this.mainCardService.getOldestTasks()
             .subscribe(
                 (oldestTaskArray: TodoTaskModel[]) => {
@@ -52,20 +52,19 @@ export class MainCardComponent implements OnInit {
             )
     }
 
-   constructor(  private mainCardService: MainCardService,
+   constructor(  private mainCardService   : MainCardService,
                  private dataStorageService: DataStorageService,
                  private todoCardsService  : TodoCardsService ) {
-                               
+
         this.checkIfOldTasks();
     }
-    
-    
 
 
 
 
-    checkIfOldTasks(){
-        if(this.oldestTaskArray.length <= 0){
+
+    checkIfOldTasks() {
+        if (this.oldestTaskArray.length <= 0) {
             this.noOldTasks = true;
         }
         else{
@@ -73,7 +72,7 @@ export class MainCardComponent implements OnInit {
             console.log('Oldest task array then', this.oldestTaskArray.length)
         }
     }
-    
+
     toggleFloatingButtons(e) {
         e.stopPropagation();
 
@@ -81,27 +80,27 @@ export class MainCardComponent implements OnInit {
         this.floatingButtonsHidden = !this.floatingButtonsHidden;
     }
 
-    hideFloatingButtons(){
+    hideFloatingButtons() {
         this.floatingButtonsHidden = true;
     }
 
 
 
 
-    createNewCard(e){
+    createNewCard(e) {
         e.stopPropagation();
         this.floatingButtonsHidden = true;
 
-        let id    = (new Date()).getTime();
-        let color = this.todoCardsService.getCardHeaderColor( id );
-        let title = this.todoCardsService.getCardTitle();
-       
-        let simpleCard = new SimpleTodoCardModel( id, color, title );
-       
-        this.todoCardsService.storeCard( simpleCard )  
+        const id    = (new Date()).getTime();
+        const color = this.todoCardsService.getCardHeaderColor( id );
+        const title = this.todoCardsService.getCardTitle();
+
+        const simpleCard = new SimpleTodoCardModel( id, color, title );
+
+        this.todoCardsService.storeCard( simpleCard )
     }
 
-    createNewTask(e){
+    createNewTask(e) {
         e.stopPropagation();
 
         console.log('create new task');

@@ -19,20 +19,20 @@ import { Component,
     selector   : 'app-todo-card',
     templateUrl: './todo-card.component.html',
     styleUrls  : ['./todo-card.component.scss'],
-    
-    // styles from todoTask can be applied 
+
+    // styles from todoTask can be applied
     encapsulation: ViewEncapsulation.None,
     providers: [TodoTaskService]
 })
 
 
 export class TodoCardComponent implements OnInit {
-    // PROPERTIES 
+    // PROPERTIES
     // event handling properties;
     showCardDrpodownMenu = false;
     showTaskInput        = false;
     disableCardTitle     = true;
-    
+
     // Loading Icon Visible
     headerLoader = false;
 
@@ -41,7 +41,7 @@ export class TodoCardComponent implements OnInit {
     // Input Field for the new task
     @ViewChild('inputTaskDetails') inputTaskDetails: ElementRef;
     @ViewChild('cardTitle') cardTitleRef: ElementRef;
-    
+
     // IMPORTANT
     // creating new instance of the todo card, listen for event when card is created
     @Input('todoCard') card: SimpleTodoCardModel;
@@ -49,9 +49,9 @@ export class TodoCardComponent implements OnInit {
 
 
     // LIFE HOOKS
-    constructor( private newTaskInput:ElementRef,
-                 private todoTaskService: TodoTaskService,
-                 private todoCardsService: TodoCardsService,
+    constructor( private newTaskInput      : ElementRef,
+                 private todoTaskService   : TodoTaskService,
+                 private todoCardsService  : TodoCardsService,
                  private dataStorageService: DataStorageService) { }
    
 
@@ -59,10 +59,14 @@ export class TodoCardComponent implements OnInit {
         // Edit Title
         this.todoCardsService.cardEdited$
             .subscribe(
-                (cardTitle:string) =>{
-                    debugger
-                    this.card.title = cardTitle;
-                    this.headerLoader = false;
+                (card:SimpleTodoCardModel) => {
+
+                    if (this.card.id === card.id) {
+                        this.card.title = card.title;
+                        console.log("Card Title changed", this.card.title)
+                        this.headerLoader = false;
+                    }
+
                 }
             )
         // Get All Tasks
@@ -75,13 +79,12 @@ export class TodoCardComponent implements OnInit {
                     this.cardTasksArray = todoTasks;
                 }
             )
-       
     }
 
 
 
     // METHODS
-    // click event handling    
+    // click event handling
     toggleCardMenu() {
         this.showCardDrpodownMenu = !this.showCardDrpodownMenu;
     }
@@ -92,22 +95,22 @@ export class TodoCardComponent implements OnInit {
 
 
     // Card Menu Options :: BEGIN
-    editCardHeader(e):void {
+    editCardHeader(e): void {
         e.stopPropagation();
         this.disableCardTitle = false;
-        this.cardTitleRef.nativeElement.value = '';        
+        this.cardTitleRef.nativeElement.value = '';
         this.cardTitleRef.nativeElement.focus();
         this.hideCardMenu();
     }
 
 
-    changeCardTitle(){
-        let newTitleInput:string = this.cardTitleRef.nativeElement.value
-        let id: number = this.card.id;
-        
-        if (newTitleInput){
-            this.headerLoader = true;             
-            this.todoCardsService.editCard(this.card.id, newTitleInput)   
+    changeCardTitle() {
+        const newTitleInput: string = this.cardTitleRef.nativeElement.value
+        const id: number = this.card.id;
+
+        if (newTitleInput) {
+            this.headerLoader = true;
+            this.todoCardsService.editCard(this.card, newTitleInput)
         }
         else {
             this.cardTitleRef.nativeElement.value = this.card.title;
@@ -115,7 +118,7 @@ export class TodoCardComponent implements OnInit {
        this.disableCardTitle = true;
      }
 
-    
+
     deleteTodoCard(e) {
         e.stopPropagation();
 
@@ -125,7 +128,7 @@ export class TodoCardComponent implements OnInit {
 
 
     showNewTaskInput(){
-       if(this.showTaskInput === false){
+       if (this.showTaskInput === false) {
             this.showTaskInput = true;
             this.inputTaskDetails.nativeElement.focus();
        }
@@ -135,7 +138,7 @@ export class TodoCardComponent implements OnInit {
         this.todoTaskService.storeTask( todoTask );
     }
 
-    newTaskAdded(e) {        
+    newTaskAdded(e) { 
 
         if(e.target.value) {
             // New TodoTask

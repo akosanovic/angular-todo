@@ -17,14 +17,15 @@ import { Component, ElementRef, Input, OnInit, ViewEncapsulation, ViewChild } fr
 })
 
 export class TodoTaskComponent implements OnInit {
-  
+
     @Input('todoTask') task: TodoTaskModel;
-    
+
     // TodoTask Description Input
     @ViewChild('todoTaskInput') taskDescriptionInput: ElementRef
 
     taskChecked     :boolean = false;
     randomTaskNumber: number = this.genarateRandomNumber();
+
     // Property Binding
     showTaskDrpodownMenu: boolean = false;
     taskDescriptionDisabled = true;
@@ -40,7 +41,7 @@ export class TodoTaskComponent implements OnInit {
     ngOnInit() {
 
         this.taskChecked = this.task.checked;
-        
+
         this.todoTaskService.editTaskDescription$
             .subscribe(
                 (taskDecription: string) => {
@@ -56,7 +57,7 @@ export class TodoTaskComponent implements OnInit {
         return number;
     }
     
-    todoTaskStatusChanged(){       
+    todoTaskStatusChanged(){
         this.taskChecked = !this.taskChecked;
         this.task.checked = this.taskChecked;
      

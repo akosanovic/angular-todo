@@ -9,7 +9,7 @@
 
             <!-- #1 -->
             <div class="inputGroup" 
-                loader-directive
+                loadDirective
                 [showLoader]="headerLoader">
                 <div class="absolutePositionedPrefix">
                     <div class="iconContainer">
@@ -37,7 +37,7 @@
                (click)='toggleCardMenu()'
                (clickOutside)='hideCardMenu()'
                [hidden]= headerLoader
-               cursor-pointer-directive>
+               cursorPointerDirective>
                 <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
             </a>
             <div class="todoCardDropDownMenu"
@@ -47,14 +47,14 @@
                         <li class="dropdownMenuItem">
                             <a class="dropdownMenuLink"
                                (click)='editCardHeader($event)'
-                               cursor-pointer-directive>
+                               cursorPointerDirective>
                                 Edit Card
                             </a>
                         </li>
                         <li class="dropdownMenuItem">
                             <a class="dropdownMenuLink"
                                (click)='deleteTodoCard($event)'
-                               cursor-pointer-directive>
+                               cursorPointerDirective>
                                 Delete Card
                             </a>
                         </li>
@@ -73,7 +73,7 @@
                
                 <a class   = "todoCardAddNewTaskButton"
                    (click) = 'showNewTaskInput()'
-                   cursor-pointer-directive>
+                   cursorPointerDirective>
                     
                     <img class="addNewButtonImageSmall" 
                         src="../../assets/images/add-button-small.svg">

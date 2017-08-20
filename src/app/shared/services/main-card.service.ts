@@ -15,14 +15,14 @@ export class MainCardService {
     constructor( private dataStorageService: DataStorageService ) { }
 
 
-  
 
-    getOldestTasks(): Observable<TodoTaskModel[]>  {  
+
+    getOldestTasks(): Observable<TodoTaskModel[]>  {
         return this.dataStorageService.getOldestTasks()
     }
-    
-    removeTasks( todoTask: TodoTaskModel ){
-        
+
+    removeTasks( todoTask: TodoTaskModel ) {
+
         // if the task is removed from main-card service remove it in the todo card where 
         // it's positioned
     }

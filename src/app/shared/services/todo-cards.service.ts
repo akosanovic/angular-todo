@@ -14,12 +14,12 @@ export class TodoCardsService {
 
     private cardAddedSubject = new Subject<SimpleTodoCardModel>();
     public cardAdded$ = this.cardAddedSubject.asObservable();
-  
+
 
     public cardDeletedSubject = new Subject<number>();
     public cardDeleted$ = this.cardDeletedSubject.asObservable();
 
-    private cardEditSubject = new Subject();
+    private cardEditSubject = new Subject<SimpleTodoCardModel>();
     public cardEdited$ = this.cardEditSubject.asObservable();
 
 
@@ -27,7 +27,7 @@ export class TodoCardsService {
     constructor( private dataStorageService: DataStorageService ) { }
 
     // Get All Cards on Initial load
-    getAllCards():Observable<SimpleTodoCardModel[]>{
+    getAllCards(): Observable<SimpleTodoCardModel[]> {
         return this.dataStorageService.getCards().first();
     }
 
@@ -41,13 +41,13 @@ export class TodoCardsService {
                 }
             )
     }
-    
-    editCard( cardId: number, cardTitle: string ) {
-        this.dataStorageService.editCard( cardId, cardTitle )
+
+    editCard( card: SimpleTodoCardModel, cardTitle: string ) {
+        this.dataStorageService.editCard( card.id, cardTitle )
             .subscribe(
-                ( value ) => {
-                    console.log( "EDIT CARD Type of value ", typeof value );
-                    this.cardEditSubject.next( cardTitle )
+                ( value: any ) => {
+                    card.title = cardTitle
+                    return this.cardEditSubject.next( card )
                 }
             )
 
@@ -61,14 +61,12 @@ export class TodoCardsService {
                 }
             )
     }
-    
-        
-   
+
 
 
   
     getCardHeaderColor(id: number):string {
-        const colorArray: [string] = [  "yellow", "turquoise", "purple", "blue", "orange" ];
+        const colorArray: [string] = [  'yellow', 'turquoise', "purple", "blue", "orange" ];
         
         let colorArrayLenth:number = colorArray.length;
        
