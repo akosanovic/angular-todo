@@ -31,6 +31,7 @@ import { AngularFireModule } from '../../node_modules/angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
+// Database Configuration
 export const firebaseConfig = {
 	production: false,
     firebase: {

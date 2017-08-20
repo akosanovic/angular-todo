@@ -13,41 +13,41 @@ import 'rxjs/Rx';
 @Injectable()
 export class DataStorageService {
 
-    constructor( private http: Http, 
+    constructor( private http: Http,
                  private firebase_db: AngularFireDatabase ) { }
 
 
-    
+
     // CARDS
     getCards(): Observable<SimpleTodoCardModel[]> {
-        return this.firebase_db.list("cards");
+        return this.firebase_db.list('cards');
     }
-                
-    getCardById( cardId: number ):FirebaseObjectObservable<SimpleTodoCardModel> {
-        return this.firebase_db.object('cards/'+cardId );
+
+    getCardById( cardId: number ): FirebaseObjectObservable<SimpleTodoCardModel> {
+        return this.firebase_db.object('cards/' + cardId );
     }
 
     storeCard( simpleCard: SimpleTodoCardModel ): Observable<any> {
-        let promise =  this.firebase_db.object('cards/'+simpleCard.id ).set(simpleCard)
+        const promise =  this.firebase_db.object('cards/' + simpleCard.id ).set(simpleCard)
         return Observable.fromPromise(promise);
     }
 
-    editCard( cardId: number, title: string ):Observable<any>{
-        let promise = this.getCardById(cardId).update({ title: title})
+    editCard( cardId: number, title: string ): Observable<any> {
+        const promise = this.getCardById(cardId).update({ title: title})
         return Observable.fromPromise(promise);
     }
 
-    deleteCard( cardId: number ): Observable<any>{
+    deleteCard( cardId: number ): Observable<any> {
         this.deleteTasksForCard( cardId )
-        let promise = this.firebase_db.object('cards/'+cardId).remove()
+        const promise = this.firebase_db.object('cards/' + cardId).remove()
         return Observable.fromPromise(promise)
     }
-   
+
 
 
     // TASKS
-    getTaskById( taskId:number ): Observable<TodoTaskModel>{
-        return this.firebase_db.object('tasks/'+taskId)
+    getTaskById( taskId: number ): Observable<TodoTaskModel> {
+        return this.firebase_db.object('tasks/' + taskId)
     }
    
     getTasksForCard( cardId: number ): Observable<TodoTaskModel[]> {

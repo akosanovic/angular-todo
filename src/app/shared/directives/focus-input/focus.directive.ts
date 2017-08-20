@@ -3,13 +3,13 @@ import { Directive, ElementRef, HostListener, OnInit, Renderer2 } from '@angular
 @Directive({
   selector: '[appFocus]'
 })
-export class FocusDirective implements OnInit{
+export class FocusDirective implements OnInit {
 
   constructor( private elementRef: ElementRef, private renderer: Renderer2 ) {
      console.log('Native element with custom directive ', elementRef.nativeElement )
    }
-   ngOnInit(){
-     let newTaskInput = this.elementRef.nativeElement;
+   ngOnInit() {
+     const newTaskInput = this.elementRef.nativeElement;
      newTaskInput.focus();
     }
    
