@@ -11,6 +11,7 @@ import { error } from 'util';
 import 'rxjs/Rx';
 
 @Injectable()
+
 export class DataStorageService {
 
     constructor( private http: Http,
@@ -49,19 +50,19 @@ export class DataStorageService {
     getTaskById( taskId: number ): Observable<TodoTaskModel> {
         return this.firebase_db.object('tasks/' + taskId)
     }
-   
+
     getTasksForCard( cardId: number ): Observable<TodoTaskModel[]> {
         return this.firebase_db.list('tasks/', {
-            query:{
+            query: {
                 orderByChild: 'cardId',
                 equalTo: cardId
             }
         });
    }
 
-    getOldestTasks(): Observable<TodoTaskModel[]>{
+    getOldestTasks(): Observable<TodoTaskModel[]> {
         return this.firebase_db.list('tasks/', {
-            query:{
+            query: {
                 limitToFirst: 3,
                 orderByChild: 'checked',
                 equalTo: false
@@ -70,40 +71,37 @@ export class DataStorageService {
     }
 
     storeTask( todoTask: TodoTaskModel ): Observable<any> {
-        let promise =  this.firebase_db.object('tasks/'+todoTask.id ).set(todoTask)
+        const promise =  this.firebase_db.object('tasks/' + todoTask.id ).set(todoTask)
         console.log(promise)
         return Observable.fromPromise(promise);
     }
-    
-    updateTaskStatus( taskId:number, status:boolean ):Observable<any>{
+
+    updateTaskStatus( taskId: number, status: boolean ): Observable<any> {
         console.log('Do you work?', status)
-        let promise = this.firebase_db.object('tasks/' + taskId).update({checked: status})
+        const promise = this.firebase_db.object('tasks/' + taskId).update({checked: status})
         return Observable.fromPromise(promise);
 
     }
 
-    editTaskDescription( taskId: number, newDescription: string ): Observable<any>{
-        let response = this.firebase_db.object( 'tasks/'+ taskId ).update( {description: newDescription} )
+    editTaskDescription( taskId: number, newDescription: string ): Observable<any> {
+        const response = this.firebase_db.object( 'tasks/' + taskId ).update( {description: newDescription} )
         return Observable.fromPromise(response);
     }
 
-    deleteTask( taskId:number ):Observable<any>{
-        let promise = this.firebase_db.object( 'tasks/'+ taskId ).remove();
+    deleteTask( taskId: number ): Observable<any> {
+        const promise = this.firebase_db.object( 'tasks/' + taskId ).remove();
         return Observable.fromPromise(promise)
     }
 
-    deleteTasksForCard( cardId: number ){
-        let todoTaskArray = this.firebase_db.list('tasks/', {
-            query:{
-                orderByChild: "cardId",
+    deleteTasksForCard( cardId: number ) {
+        const todoTaskArray = this.firebase_db.list('tasks/', {
+            query: {
+                orderByChild: 'cardId',
                 equalTo: cardId
             }
         })
         todoTaskArray.remove();
     }
 
-    
-    
 
-    
 }
